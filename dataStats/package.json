@@ -1,0 +1,19 @@
+{
+  "name": "datastats",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:build": "npx tsc -w",
+    "start:run": "nodemon build/index.js",
+    "start": "concurrently npm:start:*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^18.11.19",
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.20"
+  }
+}

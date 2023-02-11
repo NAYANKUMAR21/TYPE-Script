@@ -1,0 +1,13 @@
+In Package.json 
+"npm:start:*" -> this means that .
+npm = check the start scripts
+start = start all script which start with "start" key word
+
+packages installed  = 
+1. npm i nodemon
+2. npm i concurrently
+3. "scripts": {
+    "start:build": "npx tsc -w",  -> watches the changes made 
+    "start:run": "nodemon build/index.js",  
+    "start": "concurrently npm:start:*"   ->run both above script whose prefix is start simultaneously
+  }
