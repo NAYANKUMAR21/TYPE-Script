@@ -3,9 +3,17 @@ const app = express();
 const cors = require('cors');
 const connect = require('./config/db');
 const userRouter = require('./features/auth/auth.router');
+const ProdRouter = require('./features/prodData/prod.router');
+const cartRouter = require('./features/Cart/cart.router');
+const wishRouter = require('./features/Wishlist/wishlist.router');
+
 app.use(express.json());
 app.use(cors());
+
 app.use('/user', userRouter);
+app.use('/product', ProdRouter);
+app.use('/cart', cartRouter);
+app.use('/wishlist', wishRouter);
 
 app.get('/', (req, res) => {
   res.send('WELCOME TO HOME PAGE OF WEBSITE');

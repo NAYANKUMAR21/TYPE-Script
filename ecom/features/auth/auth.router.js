@@ -14,10 +14,17 @@ app.post('/login', async (req, res) => {
     const exists = await userModel.findOne({ email: email });
 
     if (exists && (await argon2.verify(exists.password, password))) {
-      const token = jwt.sign({ id: exists._id, email: exists.email }, 'ECOM', {
-        expiresIn: '1 day',
-      });
-      return res.status(200).send({ token, message: 'SIGN SUCCESSFULLTY' });
+      const token = jwt.sign(
+        { id: exists._id, email: exists.email, role: exists.role },
+        'ECOM',
+        {
+          expiresIn: '1 day',
+        }
+      );
+
+      return res
+        .status(200)
+        .send({ token, message: 'LOGGED IN SUCCESSFULLTY' });
     }
     return res
       .status(400)
@@ -38,12 +45,26 @@ app.post('/signup', async (req, res) => {
     console.log(exists, 'this');
     if (!exists) {
       const hash = await argon2.hash(password);
-      console.log(hash);
+      if (email.includes('ecom')) {
+        const createAdmin = await userModel.create({
+          email,
+          password: hash ? hash : password,
+          name,
+          age,
+          role: 'Admin',
+        });
+        return res.status(200).send({
+          message: 'Adim Account created Successfully',
+          Account: createAdmin,
+        });
+      }
+
       const create = await userModel.create({
         email,
         password: hash ? hash : password,
         name,
         age,
+        role: 'User',
       });
       return res
         .status(200)
