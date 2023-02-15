@@ -12,17 +12,20 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { signIn } from '../redux/auth/auth.actions';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state.auth);
-  console.log(state);
+  // console.log(state);
   const [cred, setCred] = useState({
     fname: '',
     lname: '',
@@ -30,6 +33,9 @@ const Signup = () => {
     email: '',
     password: '',
   });
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.auth);
+  console.log(state);
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'age') {
@@ -38,7 +44,12 @@ const Signup = () => {
     setCred({ ...cred, [name]: value });
   };
   const handleSubmit = () => {
-    console.log(cred);
+    const { fname, lname, age, email, password } = cred;
+    if (!fname || !lname || !age || !email || !password) {
+      return alert('Entered Invalid credentails');
+    }
+
+    dispatch(signIn(cred));
   };
   return (
     <Flex
@@ -87,7 +98,7 @@ const Signup = () => {
                 </FormControl>
               </Box>
             </HStack>
-            <FormControl id="email" isRequired>
+            <FormControl id="email">
               <FormLabel>Age</FormLabel>
               <Input
                 type="number"

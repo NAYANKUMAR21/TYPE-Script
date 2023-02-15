@@ -16,15 +16,21 @@ import {
   useBreakpointValue,
   useDisclosure,
   Img,
+  Input,
+  InputGroup,
+  InputLeftElement,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
+  PhoneIcon,
+  Search2Icon,
 } from '@chakra-ui/icons';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import CartCount from '../components/CartCount';
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   const state = useSelector((state) => state.auth);
@@ -75,9 +81,18 @@ const Navbar = () => {
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
+            <CartCount />
           </Flex>
         </Flex>
-
+        <Stack>
+          <InputGroup>
+            <InputLeftElement
+              pointerEvents="none"
+              children={<Search2Icon color="gray.300" />}
+            />
+            <Input type="text" placeholder="Search.." />
+          </InputGroup>
+        </Stack>
         {!state.data.isAuth ? (
           <Stack
             flex={{ base: 1, md: 0 }}
@@ -85,13 +100,13 @@ const Navbar = () => {
             direction={'row'}
             spacing={6}
           >
-            <Button fontSize={'sm'} fontWeight={400} bg="white">
+            <Button fontSize={'lg'} fontWeight={400} bg="white">
               <NavLink to="/login">Sign In</NavLink>
             </Button>
             <NavLink to="/signup">
               <Button
                 display={{ base: 'none', md: 'inline-flex' }}
-                fontSize={'sm'}
+                fontSize={'lg'}
                 fontWeight={600}
                 color={'white'}
                 bg={'blue.400'}
@@ -107,7 +122,7 @@ const Navbar = () => {
         ) : (
           <Button
             display={{ base: 'none', md: 'inline-flex', sm: 'inline-flex' }}
-            fontSize={'sm'}
+            fontSize={'lg'}
             fontWeight={600}
             color={'white'}
             bg={'blue.400'}
@@ -144,15 +159,24 @@ const DesktopNav = () => {
               <NavLink
                 p={2}
                 to={navItem.href ?? '#'}
-                fontSize={'sm'}
-                fontWeight={500}
                 color={linkColor}
+                bg="blue.400"
                 _hover={{
                   textDecoration: 'none',
                   color: linkHoverColor,
                 }}
               >
-                {navItem.label}
+                <Text
+                  fontSize={'lg'}
+                  fontWeight={500}
+                  color={linkColor}
+                  _hover={{
+                    textDecoration: 'none',
+                    color: linkHoverColor,
+                  }}
+                >
+                  {navItem.label}
+                </Text>
               </NavLink>
             </PopoverTrigger>
 

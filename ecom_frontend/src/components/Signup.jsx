@@ -13,6 +13,7 @@ import {
 
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { LoginAct } from '../redux/auth/auth.actions';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Login = () => {
   };
   const handleSubmit = () => {
     console.log(cred);
-    dispatch(cred);
+    dispatch(LoginAct(cred));
   };
   return (
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
