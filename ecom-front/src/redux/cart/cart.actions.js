@@ -37,3 +37,16 @@ export const addToCart = (id) => async (dispatch, state) => {
     dispatch({ type: CART_PRODUCT_ERROR });
   }
 };
+
+export const DeleteProd = (item) => async (dispatch, state) => {
+  try {
+    dispatch({ type: CART_PRODUCT_LOADING });
+    await axios.delete(`http://localhost:8080/cart/${item._id}`, {
+      productId: item.product._id,
+    });
+    dispatch({ type: CART_ADD_PRODUCT });
+  } catch (er) {
+    return dispatch({ type: CART_PRODUCT_ERROR });
+    console.log(er.message);
+  }
+};

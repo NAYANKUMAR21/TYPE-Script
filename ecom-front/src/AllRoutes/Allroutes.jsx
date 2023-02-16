@@ -1,15 +1,17 @@
-import { Text } from '@chakra-ui/react';
 import React from 'react';
+import { Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Cart from '../components/Cart';
 import Footer from '../components/Footer';
+import NotFound from '../components/Four0Four';
 import Home from '../components/Home';
 import Login from '../components/Login';
 import Crouserl from '../components/MensCrousels';
 import PoroductsSHow from '../components/PoroductsSHow';
 import Signup from '../components/Signup';
 import SingleProd from '../components/SingleProd';
+import { Wishlist } from '../components/Wishlist';
 import Navbar from '../Navbar/Navbar';
 
 const Allroutes = () => {
@@ -43,11 +45,12 @@ const Allroutes = () => {
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/cart/:id" element={<SingleProd />}></Route>
         <Route path="/sales" element={<Text>Sales</Text>}></Route>
-        <Route path="/wishlist" element={<Text>WishList</Text>}></Route>
+        <Route path="/wishlist" element={<Wishlist />}></Route>
         <Route path="/profile" element={<Text>Profile</Text>}></Route>
         {state.admin ? (
           <Route path="/admin/add" element={<Text>ADMIN ADD</Text>}></Route>
         ) : null}
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
       <Footer />
     </>

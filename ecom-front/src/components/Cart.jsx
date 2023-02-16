@@ -13,11 +13,16 @@ import {
   Button,
   Box,
   Image,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCart } from '../redux/cart/cart.actions';
+import { DeleteProd, getCart } from '../redux/cart/cart.actions';
 import { Link } from 'react-router-dom';
+import { AddToWishList, getWishList } from '../redux/wishList/wish.actions';
 
 const Cart = () => {
   let MALE_IMG =
@@ -30,69 +35,109 @@ const Cart = () => {
   const dispatch = useDispatch();
   console.log(state);
   useEffect(() => {
-    dispatch(getCart());
+    dispatch(getCart())
+      .then((res) => dispatch(getWishList()))
+      .catch((er) => console.log(er.message));
   }, []);
+  const handleDelete = (id) => {
+    console.log(id);
+    dispatch(DeleteProd(id))
+      .then((res) => {
+        dispatch(getCart()).then(() => {
+          dispatch(getWishList());
+        });
+      })
+      .catch((er) => console.log(er.message));
+  };
   return (
-    <TableContainer>
-      <Table variant="striped" m={'auto'} mt={100} w={'70%'} boxShadow="md">
-        <TableCaption>Items of Paticular User Incart</TableCaption>
-        <Thead>
-          <Tr>
-            <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
-              Product
-            </Th>
-            <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
-              Price
-            </Th>
-            <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
-              Quantity
-            </Th>
-            <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
-              Gender
-            </Th>
-            <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
-              Customs
-            </Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {state.cart.data?.map((item, index) => {
-            return (
-              <Tr key={index}>
-                <Td w="15%">
-                  <Box>
-                    <Image
-                      src={
-                        item.product.category === 'Male'
-                          ? MALE_IMG
-                          : item.product.category == 'Female'
-                          ? FEMALE_IMG
-                          : OTHERS
-                      }
-                    />
-                  </Box>
-                </Td>
-                <Td>${item.product.price}</Td>
-                <Td textAlign={'left'}>{item.quantity}</Td>
-                <Td textAlign={'left'}>{item.product.category}</Td>
-                <Td>
-                  <Box display="flex" p="0px" gap="10px">
-                    <Button bg="red.400" color={'white'}>
-                      <BsFillTrashFill />
-                    </Button>
-                    <Button bg="blue.400" color={'white'}>
-                      <Link to={`/cart/${item.product._id}`}>
-                        <BsBoxArrowUpRight />
-                      </Link>
-                    </Button>
-                  </Box>
-                </Td>
+    <>
+      {state.cart.InCart > 0 ? (
+        <TableContainer>
+          <Table variant="striped" m={'auto'} mt={100} w={'70%'} boxShadow="md">
+            <TableCaption>Items of Paticular User Incart</TableCaption>
+            <Thead>
+              <Tr>
+                <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
+                  Product
+                </Th>
+                <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
+                  Price
+                </Th>
+                <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
+                  Quantity
+                </Th>
+                <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
+                  Gender
+                </Th>
+                <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
+                  Customs
+                </Th>
               </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-    </TableContainer>
+            </Thead>
+            <Tbody>
+              {state.cart.data?.map((item, index) => {
+                return (
+                  <Tr key={index}>
+                    <Td w="15%">
+                      <Box>
+                        <Image
+                          src={
+                            item.product.category === 'Male'
+                              ? MALE_IMG
+                              : item.product.category == 'Female'
+                              ? FEMALE_IMG
+                              : OTHERS
+                          }
+                        />
+                      </Box>
+                    </Td>
+                    <Td>${item.product.price}</Td>
+                    <Td textAlign={'left'}>{item.quantity}</Td>
+                    <Td textAlign={'left'}>{item.product.category}</Td>
+                    <Td>
+                      <Box display="flex" p="0px" gap="10px">
+                        <Button
+                          bg="red.400"
+                          color={'white'}
+                          onClick={() => handleDelete(item)}
+                        >
+                          <BsFillTrashFill />
+                        </Button>
+                        <Link to={`/cart/${item.product._id}`}>
+                          <Button bg="blue.400" color={'white'}>
+                            <BsBoxArrowUpRight />
+                          </Button>
+                        </Link>
+                      </Box>
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Box pt={'60px'} zIndex="0">
+          <Alert status="error">
+            <AlertIcon />
+            <AlertTitle>Your Cart is Empty!</AlertTitle>
+            <AlertDescription>
+              Visit Home Page to Shop{' '}
+              <Link to="/">
+                <Button
+                  bg="transperent"
+                  color="blue.400"
+                  textDecoration={'underline'}
+                  __hover={{ bg: 'transperent' }}
+                >
+                  Home
+                </Button>
+              </Link>
+            </AlertDescription>
+          </Alert>
+        </Box>
+      )}
+    </>
   );
 };
 

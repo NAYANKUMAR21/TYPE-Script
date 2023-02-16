@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -32,6 +32,9 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CartCount from '../components/CartCount';
 import { LOGGOUT_USER } from '../redux/auth/auth.type';
+import { getCart } from '../redux/cart/cart.actions';
+import { getWishList } from '../redux/wishList/wish.actions';
+
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   const state = useSelector((state) => state.auth);
@@ -42,10 +45,17 @@ const Navbar = () => {
     dispatch({ type: LOGGOUT_USER });
     localStorage.removeItem('token');
   };
+  useEffect(() => {
+    dispatch(getCart())
+      .then((res) => {
+        dispatch(getWishList());
+      })
+      .catch((er) => console.log(er.message, 'this is from the home'));
+  }, []);
   return (
     <Box>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
+        bg={useColorModeValue('white', 'white')}
         color={useColorModeValue('gray.600', 'white')}
         minH={'60px'}
         py={{ base: 2 }}
@@ -55,6 +65,10 @@ const Navbar = () => {
         borderColor={useColorModeValue('gray.200', 'gray.900')}
         align={'center'}
         position="fixed"
+        top="0px"
+        right={'0px'}
+        left="0px"
+        zIndex={99}
         w="full"
       >
         <Flex
@@ -266,7 +280,7 @@ const MobileNav = () => {
       display={{ md: 'none' }}
     >
       {NAV_ITEMS.map((navItem, index) => (
-        <Box key={index}>
+        <Box key={index} border="1px solid black" mt={'45px'}>
           <MobileNavItem key={navItem.label} {...navItem} index={index} />
         </Box>
       ))}
@@ -315,9 +329,9 @@ const MobileNavItem = ({ label, children, href }) => {
         >
           {children &&
             children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
+              <NavLink key={child.label} py={2} to={child.href}>
                 {child.label}
-              </Link>
+              </NavLink>
             ))}
         </Stack>
       </Collapse>
@@ -355,7 +369,7 @@ const NAV_ITEMS = [
         href: '/sales',
       },
       {
-        label: `Items in cart ${99}`,
+        label: `Go to Cart`,
         subLabel: 'Find cart Items',
         href: '/cart',
       },

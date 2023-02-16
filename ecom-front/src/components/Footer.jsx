@@ -32,6 +32,7 @@ const Footer = () => {
         w="full"
         justify="space-between"
         p={10}
+        pt={100}
       >
         <Flex justify="center">
           <Link to="/">

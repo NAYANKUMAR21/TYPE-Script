@@ -9,11 +9,13 @@ import thunk from 'redux-thunk';
 import { AuthReducer } from './auth/auth.reducer';
 import { CartReducer } from './cart/cart.reducer';
 import { ProdReducer } from './products/prod.reducer';
+import { WishlistReducer } from './wishList/wish.reducer';
 
 const rootReducer = combineReducers({
   auth: AuthReducer,
   products: ProdReducer,
   CartItems: CartReducer,
+  WishListItems: WishlistReducer,
 });
 
 const createComposer = window.__REDUX_DEVTOOLS_EXTENSION__ || compose;

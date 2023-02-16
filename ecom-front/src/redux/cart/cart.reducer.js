@@ -11,7 +11,6 @@ const initialState = {
     InCart: 0,
   },
   bought: [],
-  wishlist: [],
   loading: false,
   error: false,
 };

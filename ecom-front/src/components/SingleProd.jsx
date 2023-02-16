@@ -21,7 +21,8 @@ import { MdLocalShipping } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSingle } from '../redux/products/prod.actions';
-import { addToCart } from '../redux/cart/cart.actions';
+import { addToCart, getCart } from '../redux/cart/cart.actions';
+import { AddToWishList, getWishList } from '../redux/wishList/wish.actions';
 
 const SingleProd = () => {
   let MALE_IMG =
@@ -39,7 +40,16 @@ const SingleProd = () => {
     dispatch(getSingle(id));
   }, [id]);
   const handleAddTOcart = (id) => {
-    dispatch(addToCart(id));
+    dispatch(addToCart(id))
+      .then((res) => {
+        dispatch(getCart());
+      })
+      .catch((er) => console.log(er.message));
+  };
+  const MoveToWishListv = (id) => {
+    dispatch(AddToWishList(id))
+      .then((res) => dispatch(getWishList()))
+      .catch((er) => console.log(er.message));
   };
   return (
     <Container maxW={'7xl'}>
@@ -224,7 +234,9 @@ const SingleProd = () => {
               boxShadow: 'lg',
               bg: useColorModeValue('red.400', 'gray.50'),
             }}
-            onClick={()=>{}}
+            onClick={() => {
+              MoveToWishListv(id);
+            }}
           >
             Add to WishList{' '}
             <span style={{ marginLeft: '5px' }}>
