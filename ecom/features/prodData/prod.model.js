@@ -5,7 +5,8 @@ const file = {
   quantity: { type: Number, require: true },
   price: { type: Number, require: true },
   visited: { type: Number },
-  category: { type: String },
+  category: { type: String, enum: ['Male', 'Female', 'binary'] },
+  descriptiton: { type: String },
 };
 const productSchema = new mongoose.Schema(file);
 const productModel = mongoose.model('product', productSchema);

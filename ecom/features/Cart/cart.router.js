@@ -5,31 +5,36 @@ const { cartMiddleware } = require('../../Middleware/middleware');
 const userModel = require('../auth/auth.model');
 const productModel = require('../prodData/prod.model');
 const cartModel = require('./cart.model');
-app.get('/', cartMiddleware, async (req, res) => {
+app.post('/getAll', cartMiddleware, async (req, res) => {
   try {
     console.log(req.UserId, 'from get');
-    const getCart = await cartModel.find({ user: req.UserId });
+    const getCart = await cartModel
+      .find({ user: req.UserId })
+      .populate(['product'])
+      .sort({ price: 1 });
+    console.log(getCart, 'backend');
     return res.status(200).send(getCart);
   } catch (er) {
     return res.status(500).send({ message: 'Something wrong happened' });
   }
 });
-app.post('/', async (req, res) => {
-  const { userId, productId, quantity } = req.body;
-  if (!userId || !productId || !quantity) {
+
+app.post('/', cartMiddleware, async (req, res) => {
+  const { productId, quantity } = req.body;
+  if (!productId || !quantity) {
     return res
       .status(500)
       .send({ message: 'Something wrong happened from if condtn' });
   }
   try {
-    console.log('this', productId);
+    console.log('this from post cart', productId);
     await productModel.findByIdAndUpdate(
       { _id: productId },
       { $inc: { quantity: -quantity } },
       { new: true }
     );
 
-    await cartModel.create({ user: userId, product: productId, quantity });
+    await cartModel.create({ user: req.UserId, product: productId, quantity });
 
     return res.status(300).send({ message: 'Successfully added to cart' });
   } catch (er) {

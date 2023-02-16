@@ -28,6 +28,7 @@ const middlewarePost = async (req, res, next) => {
 };
 const cartMiddleware = async (req, res, next) => {
   const { token } = req.body;
+  console.log(token, 'back fron above');
   if (!token) {
     return res
       .status(500)
@@ -40,6 +41,7 @@ const cartMiddleware = async (req, res, next) => {
       const check = await userModel.findOne({ _id: verify.id });
       if (check) {
         req.UserId = verify.id;
+        console.log(token, 'this back');
         return next();
       }
     }

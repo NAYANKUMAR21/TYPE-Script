@@ -3,10 +3,10 @@ const userModel = require('../auth/auth.model');
 const productModel = require('./prod.model');
 const app = Router();
 const { middlewarePost } = require('../../Middleware/middleware');
-
 app.get('/', async (req, res) => {
   try {
-    const getAll = await productModel.find();
+    console.log('this geall');
+    let getAll = await productModel.find();
     return res
       .status(200)
       .send({ message: 'Succefully feteched', data: getAll });
@@ -14,6 +14,35 @@ app.get('/', async (req, res) => {
     return res
       .status(500)
       .send({ message: 'Something happened Wrong from product get' });
+  }
+});
+app.get('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // console.log('this get genders');
+    console.log(id, 'backedn');
+
+    let getAll = await productModel.find({ category: id });
+
+    return res
+      .status(200)
+      .send({ message: 'Succefully feteched', data: getAll });
+  } catch (er) {
+    return res
+      .status(500)
+      .send({ message: 'Something happened Wrong from product get' });
+  }
+});
+app.get('/single/:single', async (req, res) => {
+  const { single } = req.params;
+  try {
+    console.log(single, 'from this single');
+    const getSingle = await productModel.findOne({ _id: single });
+    console.log(getSingle);
+    return res.status(200).send(getSingle);
+  } catch (er) {
+    return res.status(500).send(er.message);
   }
 });
 //product post by shopkeeper
