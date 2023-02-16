@@ -86,7 +86,7 @@ const SubHome1 = () => {
           delivery.
         </chakra.p>
         <Box m="auto">
-          <Link to="product/male">
+          <Link to="product/all">
             <Box
               display="inline-flex"
               rounded="md"

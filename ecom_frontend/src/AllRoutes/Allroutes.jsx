@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Home from '../components/Home';
 import Login from '../components/Login';
+import PoroductsSHow from '../components/PoroductsSHow';
 import Signup from '../components/Signup';
 import Navbar from '../Navbar/Navbar';
 
@@ -22,9 +23,7 @@ const Allroutes = () => {
         ></Route>
         <Route path="/signup" element={<Login></Login>}></Route>
         <Route path="/login" element={<Signup></Signup>}></Route>
-        <Route path="/product/male" element={<Text>MALE</Text>} />
-        <Route path="/product/female" element={<Text>FEMALE</Text>} />
-        <Route path="/product/others" element={<Text>OTHERS</Text>} />
+        <Route path="/product/:id" element={<PoroductsSHow />} />
         <Route path="/cart" element={<Text>CART</Text>}></Route>
         <Route path="/sales" element={<Text>Sales</Text>}></Route>
         <Route path="/wishlist" element={<Text>WishList</Text>}></Route>

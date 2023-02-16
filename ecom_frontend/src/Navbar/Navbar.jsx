@@ -335,7 +335,7 @@ const NAV_ITEMS = [
         href: '/sales',
       },
       {
-        label: 'Items in cart',
+        label: `Items in cart ${99}`,
         subLabel: 'Find cart Items',
         href: '/cart',
       },
