@@ -41,49 +41,93 @@ const Crouserl = () => {
     return () => clearInterval(automatedSlide);
   }, [slidesCount]);
   return (
-    <Flex
-      w="full"
-      bg="#edf3f8"
-      _dark={{
-        bg: '#3e3e3e',
-      }}
-      // p={10}
-      height="100vh"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Flex w="full" overflow="hidden">
-        <Flex
-          // pos="relative"
-          // h="400px"
-          w="full"
-          {...carouselStyle}
-          height="100vh"
-        >
-          {slides.map((slide, sid) => (
-            <Box key={`slide-${sid}`} flex="none" boxSize="full" shadow="md">
-              <Text
-                color="white"
-                fontSize="xs"
-                p="8px 12px"
-                pos="absolute"
-                top="0"
-                whiteSpace="nowrap"
-              >
-                {sid + 1} / {slidesCount}
-              </Text>
-              <Image
-                mt="50px"
-                src={slide.img}
-                alt="carousel image"
-                boxSize="full"
-                backgroundSize="cover"
-              />
-            </Box>
-          ))}
+    <>
+      <Flex
+        w="100%"
+        bg="#edf3f8"
+        _dark={{
+          bg: '#3e3e3e',
+        }}
+        // p={10}
+        height="100vh"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Flex w="full" overflow="hidden" pt={'130px'}>
+          <Flex
+            pos="relative"
+            h="400px"
+            w="full"
+            height={'100vh'}
+            {...carouselStyle}
+          >
+            {slides.map((slide, sid) => (
+              <Box key={`slide-${sid}`} flex="none" boxSize="full" shadow="md">
+                <Text
+                  color="white"
+                  fontSize="xs"
+                  p="8px 12px"
+                  pos="absolute"
+                  top="0"
+                  whiteSpace="nowrap"
+                >
+                  {sid + 1} / {slidesCount}
+                </Text>
+                <Image
+                  src={slide.img}
+                  alt="carousel image"
+                  boxSize="full"
+                  backgroundSize="cover"
+                />
+              </Box>
+            ))}
+          </Flex>
         </Flex>
       </Flex>
-    </Flex>
+    </>
+    // <Flex
+    //   w="full"
+    //   bg="#edf3f8"
+    //   _dark={{
+    //     bg: '#3e3e3e',
+    //   }}
+    //   // p={10}
+    //   height="100vh"
+    //   alignItems="center"
+    //   justifyContent="center"
+    // >
+    //   <Flex w="full" overflow="hidden">
+    //     <Flex
+    //       // pos="relative"
+    //       // h="400px"
+    //       w="full"
+    //       {...carouselStyle}
+    //       height="100vh"
+    //     >
+    //       {slides.map((slide, sid) => (
+    //         <Box key={`slide-${sid}`} flex="none" boxSize="full" shadow="md">
+    //           <Text
+    //             color="white"
+    //             fontSize="xs"
+    //             p="8px 12px"
+    //             pos="absolute"
+    //             top="0"
+    //             whiteSpace="nowrap"
+    //           >
+    //             {sid + 1} / {slidesCount}
+    //           </Text>
+    //           <Image
+    //             mt="50px"
+    //             src={slide.img}
+    //             alt="carousel image"
+    //             boxSize="full"
+    //             backgroundSize="cover"
+    //           />
+    //         </Box>
+    //       ))}
+    //     </Flex>
+    //   </Flex>
+    // </Flex>
   );
 };
 export default Crouserl;

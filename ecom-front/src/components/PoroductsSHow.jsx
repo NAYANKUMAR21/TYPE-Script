@@ -5,6 +5,12 @@ import { useParams, Link } from 'react-router-dom';
 import { getAllProducts, getGenders } from '../redux/products/prod.actions';
 import ECards from './ECards';
 import Crouserl from './MensCrousels';
+const breakPoints = {
+  base: 'repeat(1,1fr)',
+  sm: 'repeat(2,1fr)',
+  md: 'repeat(3,1fr)',
+  lg: 'repeat(4,1fr)',
+};
 
 const PoroductsSHow = () => {
   const { id } = useParams();
@@ -24,7 +30,7 @@ const PoroductsSHow = () => {
   return (
     <Box>
       <Crouserl id={id} />
-      <Grid templateColumns={'repeat(3,1fr)'} gap="3" p={10}>
+      <Grid templateColumns={breakPoints} gap="3" p={10} mt={10}>
         {id === 'Male'
           ? state?.data?.men?.map((item, index) => {
               console.log(id);

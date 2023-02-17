@@ -147,7 +147,7 @@ const Navbar = () => {
           <>
             {state.admin ? (
               <NavLink to="/admin/add">
-                <Text p="0px 10px">Add Page</Text>
+                <Text p="0px 10px">Admin</Text>
               </NavLink>
             ) : null}
             <Button

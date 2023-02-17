@@ -12,7 +12,7 @@ const initialState = {
   isSigned: false,
   data: {
     token: localStorage.getItem('token') || null,
-    isAuth: false,
+    isAuth: !!localStorage.getItem('token'),
   },
   loading: false,
   error: false,
@@ -57,10 +57,10 @@ export const AuthReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
 
-        admin: true,
+        admin: !!localStorage.getItem('token'),
         data: {
-          token: payload,
-          isAuth: true,
+          token: localStorage.getItem('token'),
+          isAuth: localStorage.getItem('token') ? true : false,
         },
         loading: false,
         error: false,
