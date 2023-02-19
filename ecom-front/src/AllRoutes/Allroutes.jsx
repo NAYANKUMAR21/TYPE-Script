@@ -14,6 +14,12 @@ import SingleProd from '../components/SingleProd';
 import { Wishlist } from '../components/Wishlist';
 import Navbar from '../Navbar/Navbar';
 import ADminPage from '../components/ADminPage';
+import JoinOurTeam from '../components/ADDDataPage';
+import ECards2 from '../components/ECARDS2';
+import ADminProdPage from '../components/ADminProdPage';
+import ALLuser from '../components/ALLuser';
+import Graph from '../components/Graphs';
+import AdminGraphPage from '../components/AdminGraphPage';
 
 const Allroutes = () => {
   const state = useSelector((state) => state.auth);
@@ -49,11 +55,12 @@ const Allroutes = () => {
         <Route path="/profile" element={<Text>Profile</Text>}></Route>
         {state.admin ? (
           <>
-            <Route path="/admin/add" element={<ADminPage />} />
+            <Route path="/admin" element={<ADminPage />}></Route>
+            <Route path="/admin/add" element={<JoinOurTeam />} />
             <Route path="/admin/sales" element={<Text>Sales</Text>} />
-            <Route path="/admin/graphs" element={<Text>graph</Text>} />
-            <Route path="/admin/products" element={<Text>Products</Text>} />
-            <Route path="/admin/users" element={<Text>users</Text>} />
+            <Route path="/admin/graphs" element={<AdminGraphPage />} />
+            <Route path="/admin/products" element={<ADminProdPage />} />
+            <Route path="/admin/users" element={<ALLuser />} />
           </>
         ) : null}
         <Route path="*" element={<NotFound />}></Route>

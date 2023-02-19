@@ -5,9 +5,12 @@ import {
   AUTH_ERROR,
   AUTH_ADMIN_LOGGED_IN,
   LOGGOUT_USER,
+  GET_ALL_USERS,
 } from './auth.type';
 
 const initialState = {
+  allUsers: [],
+  single: {},
   admin: false,
   isSigned: false,
   data: {
@@ -19,6 +22,14 @@ const initialState = {
 };
 export const AuthReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case GET_ALL_USERS: {
+      return {
+        ...state,
+        allUsers: payload,
+        loading: false,
+        error: false,
+      };
+    }
     case AUTH_LOADING: {
       return {
         ...state,
@@ -37,6 +48,7 @@ export const AuthReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isSigned: true,
+        admin: false,
         data: {
           token: localStorage.getItem('token') || payload,
           isAuth: localStorage.getItem('token') ? true : false,
@@ -56,7 +68,7 @@ export const AuthReducer = (state = initialState, { type, payload }) => {
     case AUTH_ADMIN_LOGGED_IN: {
       return {
         ...state,
-
+        isSigned: true,
         admin: !!localStorage.getItem('token'),
         data: {
           token: localStorage.getItem('token'),
@@ -68,6 +80,8 @@ export const AuthReducer = (state = initialState, { type, payload }) => {
     }
     case LOGGOUT_USER: {
       return {
+        allUsers: [],
+        single: {},
         admin: false,
         isSigned: false,
         data: {

@@ -57,3 +57,32 @@ export const getSingle = (id) => async (dispatch, state) => {
     return dispatch({ type: GET_PROD_ERROR });
   }
 };
+
+export const deleteProd = (id) => async (dispatch, state) => {
+  try {
+    console.log(id, 'from actions');
+    dispatch({ type: GET_PROD_LOADING });
+    const deleteProd = await axios.delete(
+      `http://localhost:8080/product/${id}`,
+      { token: localStorage.getItem('token') }
+    );
+    return dispatch({ type: GET_SINLE_PRODUCT, payload: {} });
+  } catch (er) {
+    return dispatch({ type: GET_PROD_ERROR });
+  }
+};
+
+export const PostData = (data) => async (dispatch, state) => {
+  try {
+    let body = {
+      ...data,
+      token: localStorage.getItem('token'),
+    };
+    dispatch({ type: GET_PROD_LOADING });
+    const postdata = await axios.post('http://localhost:8080/product/', body);
+    return dispatch({ type: GET_SINLE_PRODUCT, payload: {} });
+  } catch (er) {
+    dispatch({ type: GET_PROD_ERROR });
+    console.log(er.message);
+  }
+};

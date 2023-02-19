@@ -67,6 +67,7 @@ export const ProdReducer = (state = initialState, { type, payload }) => {
         error: false,
       };
     }
+
     case GET_SINLE_PRODUCT: {
       return {
         loading: false,

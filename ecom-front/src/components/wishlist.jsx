@@ -50,6 +50,7 @@ export const Wishlist = () => {
   };
   //MoveToCart
   const handleMoveCart = (id) => {
+    console.log(id, 'this deo handle');
     dispatch(MoveToCart(id)).then((res) =>
       dispatch(getWishList())
         .then((res) => dispatch(getCart()))

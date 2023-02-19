@@ -1,19 +1,19 @@
 import { Box, Flex, chakra, Image } from '@chakra-ui/react';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/cart/cart.actions';
 
 const ECards = ({ image, price, title, desc, gen, index }) => {
   const dispatch = useDispatch();
-
+  const state = useSelector((store) => store.auth);
   let MALE_IMG =
     'https://manofmany.com/wp-content/uploads/2019/04/David-Gandy.jpg';
   let FEMALE_IMG =
     'https://femina.wwmindia.com/content/2021/sep/women-thumb1632797644.jpg';
   let OTHERS =
     'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=320&q=80';
-  console.log(gen);
-  
+  console.log(state);
+
   return (
     <Flex
       key={index}

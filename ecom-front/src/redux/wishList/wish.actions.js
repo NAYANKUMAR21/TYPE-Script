@@ -47,6 +47,7 @@ export const deleteProduct = (id) => async (dispatch, state) => {
 
 export const MoveToCart = (id) => async (dispatch, state) => {
   try {
+    console.log(id,"this from actions")
     dispatch({ type: WISHLIST_PRODUCT_LOADING });
     const x = await axios.post(`http://localost:8080/wishlist/toCart/${id}`, {
       token: localStorage.getItem('token'),

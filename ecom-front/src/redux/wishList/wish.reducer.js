@@ -1,4 +1,5 @@
 import {
+  LOGOUT_UESER_WISHLIST,
   WISHLIST_ADD_PRODUCT,
   WISHLIST_GET_PRODUCT,
   WISHLIST_MOVE_TO_CART,
@@ -54,6 +55,17 @@ export const WishlistReducer = (state = initialState, { type, payload }) => {
         ...state,
         error: false,
         loading: false,
+      };
+    }
+
+    case LOGOUT_UESER_WISHLIST: {
+      return {
+        wishlist: {
+          data: [],
+          InWish: 0,
+        },
+        loading: false,
+        error: false,
       };
     }
     default: {

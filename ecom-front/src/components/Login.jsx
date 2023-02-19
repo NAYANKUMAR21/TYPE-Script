@@ -22,6 +22,8 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from '../redux/auth/auth.actions';
+import { getCart } from '../redux/cart/cart.actions';
+import { getWishList } from '../redux/wishList/wish.actions';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -50,6 +52,15 @@ const Signup = () => {
     }
 
     dispatch(signIn(cred));
+    // .then((res) => {
+    //   console.log('login submit button');
+    //   dispatch(getCart())
+    //     .then((res) => {
+    //       dispatch(getWishList());
+    //     })
+    //     .catch((er) => console.log(er.message, 'this is from the home'));
+    // })
+    // .catch((er) => console.log(er.message));
   };
   return (
     <Flex

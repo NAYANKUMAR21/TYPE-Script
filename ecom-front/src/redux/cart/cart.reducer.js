@@ -3,6 +3,7 @@ import {
   CART_GET_PRODUCT,
   CART_PRODUCT_ERROR,
   CART_PRODUCT_LOADING,
+  LOGOUT_UESER_CART,
 } from './cart.type';
 
 const initialState = {
@@ -45,6 +46,17 @@ export const CartReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: true,
+        error: false,
+      };
+    }
+    case LOGOUT_UESER_CART: {
+      return {
+        cart: {
+          data: [],
+          InCart: 0,
+        },
+        bought: [],
+        loading: false,
         error: false,
       };
     }

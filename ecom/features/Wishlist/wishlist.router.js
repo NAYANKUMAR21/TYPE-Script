@@ -34,8 +34,10 @@ app.post('/', cartMiddleware, async (req, res) => {
 
 app.post('/toCart/:id', cartMiddleware, async (req, res) => {
   const { id } = req.params;
+  console.log(id, 'this is post wish erquest');
   try {
     let x = await wishModel.findByIdAndDelete({ _id: id });
+    console.log(x, 'this route');
     await cartModel.create({
       user: req.UserId,
       product: x.product,
@@ -53,7 +55,10 @@ app.post('/toCart/:id', cartMiddleware, async (req, res) => {
     //   product: productId,
     //   quantity: 1,
     // });
-    return res.status(200).send({ message: 'Product moved to cart ' });
+    return res
+      .append('Access-Control-Allow-Origin', ['*'])
+      .status(200)
+      .send({ message: 'Product moved to cart ' });
   } catch (er) {
     return res.status(400).send({ message: 'Something went wrong' });
   }

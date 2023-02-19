@@ -15,6 +15,7 @@ const middlewarePost = async (req, res, next) => {
       const check = await userModel.findOne({ _id: verify.id });
       console.log(check, 'c');
       if (check.role === 'Admin') {
+        console.log(token, 'this from middleware');
         return next();
       }
       return res.status(403).send({ message: 'Un-Authorized' });

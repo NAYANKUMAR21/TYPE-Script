@@ -34,6 +34,8 @@ import CartCount from '../components/CartCount';
 import { LOGGOUT_USER } from '../redux/auth/auth.type';
 import { getCart } from '../redux/cart/cart.actions';
 import { getWishList } from '../redux/wishList/wish.actions';
+import { LOGOUT_UESER_WISHLIST } from '../redux/wishList/wish.types';
+import { LOGOUT_UESER_CART } from '../redux/cart/cart.type';
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
@@ -42,16 +44,12 @@ const Navbar = () => {
   console.log(state);
   const handleLogout = () => {
     console.log('this logout');
-    dispatch({ type: LOGGOUT_USER });
     localStorage.removeItem('token');
+    dispatch({ type: LOGGOUT_USER });
+    dispatch({ type: LOGOUT_UESER_WISHLIST });
+    dispatch({ type: LOGOUT_UESER_CART });
   };
-  useEffect(() => {
-    dispatch(getCart())
-      .then((res) => {
-        dispatch(getWishList());
-      })
-      .catch((er) => console.log(er.message, 'this is from the home'));
-  }, []);
+
   return (
     <Box>
       <Flex
@@ -146,7 +144,7 @@ const Navbar = () => {
         ) : (
           <>
             {state.admin ? (
-              <NavLink to="/admin/add">
+              <NavLink to="/admin">
                 <Text p="0px 10px">Admin</Text>
               </NavLink>
             ) : null}

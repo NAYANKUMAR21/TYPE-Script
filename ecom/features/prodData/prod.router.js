@@ -47,7 +47,7 @@ app.get('/single/:single', async (req, res) => {
 });
 //product post by shopkeeper
 app.post('/', middlewarePost, async (req, res) => {
-  const { image, title, quantity, price } = req.body;
+  const { image, title, quantity, price, descriptiton } = req.body;
   if (!image || !title || !quantity || !price) {
     return res
       .status(500)
@@ -60,6 +60,7 @@ app.post('/', middlewarePost, async (req, res) => {
       quantity,
       visited: req.body.visited ? req.body.visited : 0,
       price,
+      descriptiton,
       category: req.body.category,
     });
     return res
@@ -90,8 +91,9 @@ app.patch('/', middlewarePost, async (req, res) => {
     return res.status(500).send({ message: 'Something happened Wrong' });
   }
 });
-app.delete('/:id', middlewarePost, async (req, res) => {
+app.delete('/:id', async (req, res) => {
   const { id } = req.params;
+  console.log(id, '?this backend');
   if (!id) {
     return res
       .status(500)

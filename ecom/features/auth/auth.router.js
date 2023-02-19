@@ -24,7 +24,7 @@ app.post('/login', async (req, res) => {
 
       return res
         .status(200)
-        .send({ token, message: 'LOGGED IN SUCCESSFULLTY' });
+        .send({ token, message: 'LOGGED IN SUCCESSFULLTY', user: exists.role });
     }
     return res
       .status(400)
@@ -73,6 +73,17 @@ app.post('/signup', async (req, res) => {
     return res.status(400).send({ message: 'Account Already exists' });
   } catch (er) {
     return res.status(500).send({ message: er.message });
+  }
+});
+
+app.get('/allusers', async (req, res) => {
+  try {
+    const getusers = await userModel.find();
+    return res
+      .status(200)
+      .send({ message: 'Successfully fetched', users: getusers });
+  } catch (er) {
+    return res.status(400).send(er.message);
   }
 });
 module.exports = app;
