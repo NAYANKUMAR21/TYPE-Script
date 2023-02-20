@@ -16,7 +16,12 @@ import { useDispatch } from 'react-redux';
 import { getCart } from '../redux/cart/cart.actions';
 import { getWishList } from '../redux/wishList/wish.actions';
 const Home = () => {
-  
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCart())
+      .then((res) => dispatch(getWishList()))
+      .catch((er) => console.log(er.message));
+  }, []);
   return (
     <>
       <Link to="/product/Male">

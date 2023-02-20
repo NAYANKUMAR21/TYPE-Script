@@ -51,13 +51,15 @@ export const Wishlist = () => {
   //MoveToCart
   const handleMoveCart = (id) => {
     console.log(id, 'this deo handle');
-    dispatch(MoveToCart(id)).then((res) =>
-      dispatch(getWishList())
-        .then((res) => dispatch(getCart()))
-        .catch((er) => console.log(er.message))
-        .catch((er) => console.log(er.message))
-    );
+    dispatch(MoveToCart(id)).then((res) => {
+      dispatch(getWishList());
+    });
   };
+  useEffect(() => {
+    dispatch(getCart())
+      .then((res) => dispatch(getWishList()))
+      .catch((er) => console.log(er.message));
+  }, []);
   return (
     <>
       {InWish > 0 ? (

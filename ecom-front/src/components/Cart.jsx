@@ -34,11 +34,7 @@ const Cart = () => {
   const state = useSelector((store) => store.CartItems);
   const dispatch = useDispatch();
   console.log(state);
-  useEffect(() => {
-    dispatch(getCart())
-      .then((res) => dispatch(getWishList()))
-      .catch((er) => console.log(er.message));
-  }, []);
+
   const handleDelete = (id) => {
     console.log(id);
     dispatch(DeleteProd(id))
@@ -49,6 +45,11 @@ const Cart = () => {
       })
       .catch((er) => console.log(er.message));
   };
+  useEffect(() => {
+    dispatch(getCart())
+      .then((res) => dispatch(getWishList()))
+      .catch((er) => console.log(er.message));
+  }, []);
   return (
     <>
       {state.cart.InCart > 0 ? (
