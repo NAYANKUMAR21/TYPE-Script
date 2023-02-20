@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Flex,
@@ -19,6 +19,8 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  HStack,
+  VStack,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -36,12 +38,15 @@ import { getCart } from '../redux/cart/cart.actions';
 import { getWishList } from '../redux/wishList/wish.actions';
 import { LOGOUT_UESER_WISHLIST } from '../redux/wishList/wish.types';
 import { LOGOUT_UESER_CART } from '../redux/cart/cart.type';
+import SearchBar from '../components/SearchBar';
 
 const Navbar = () => {
+  const [Search, setSearch] = useState('');
   const { isOpen, onToggle } = useDisclosure();
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   console.log(state);
+
   const handleLogout = () => {
     console.log('this logout');
     localStorage.removeItem('token');
@@ -49,7 +54,9 @@ const Navbar = () => {
     dispatch({ type: LOGOUT_UESER_WISHLIST });
     dispatch({ type: LOGOUT_UESER_CART });
   };
-
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
   return (
     <Box>
       <Flex
@@ -107,13 +114,19 @@ const Navbar = () => {
           </Flex>
         </Flex>
         <Stack>
-          <InputGroup>
+          <SearchBar />
+          {/* <InputGroup>
             <InputLeftElement
               pointerEvents="none"
               children={<Search2Icon color="gray.300" />}
             />
-            <Input type="text" placeholder="Search.." />
-          </InputGroup>
+            <Input
+              type="text"
+              placeholder="Search.."
+              value={Search}
+              onChange={handleSearch}
+            />
+          </InputGroup> */}
         </Stack>
         {!state.data.isAuth ? (
           <Stack

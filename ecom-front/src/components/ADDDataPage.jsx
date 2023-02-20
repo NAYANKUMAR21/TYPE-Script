@@ -94,7 +94,7 @@ export default function JoinOurTeam() {
     return;
   };
   return (
-    <Box position={'relative'}>
+    <Box position={'relative'} mt="10px">
       <Container
         as={SimpleGrid}
         maxW={'7xl'}

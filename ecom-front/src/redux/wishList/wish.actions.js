@@ -49,9 +49,27 @@ export const MoveToCart = (id) => async (dispatch, state) => {
   try {
     console.log(id, 'this from actions');
     dispatch({ type: WISHLIST_PRODUCT_LOADING });
-    const x = await axios.post(`http://localost:8080/wishlist/toCart/${id}`, {
+    let body = {
+      token: localStorage.getItem('token'),
+    };
+    await axios.post(`http://localhost:8080/wishlist/toCart/${id}`, {
       token: localStorage.getItem('token'),
     });
+    // let res = await fetch(, {
+    //   method: 'POST',
+    //   mode: 'cors',
+    //   cache: 'no-cache',
+    //   credentials: 'same-origin',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   redirect: 'follow',
+    //   referrerPolicy: 'no-referrer',
+    //   body: JSON.stringify(),
+    // });
+    // await res.json();
+
+    console.log('request done');
     dispatch({ type: WISHLIST_ADD_PRODUCT });
   } catch (er) {
     dispatch({ type: WISHLIST_PRODUCT_ERROR });

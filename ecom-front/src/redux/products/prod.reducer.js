@@ -70,6 +70,10 @@ export const ProdReducer = (state = initialState, { type, payload }) => {
 
     case GET_SINLE_PRODUCT: {
       return {
+        ...state,
+        data: {
+          ...state.data,
+        },
         loading: false,
         error: false,
         single: payload,

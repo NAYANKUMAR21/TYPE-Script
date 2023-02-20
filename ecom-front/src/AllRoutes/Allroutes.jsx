@@ -7,7 +7,6 @@ import Footer from '../components/Footer';
 import NotFound from '../components/Four0Four';
 import Home from '../components/Home';
 import Login from '../components/Login';
-import Crouserl from '../components/MensCrousels';
 import PoroductsSHow from '../components/PoroductsSHow';
 import Signup from '../components/Signup';
 import SingleProd from '../components/SingleProd';
@@ -15,11 +14,12 @@ import { Wishlist } from '../components/Wishlist';
 import Navbar from '../Navbar/Navbar';
 import ADminPage from '../components/ADminPage';
 import JoinOurTeam from '../components/ADDDataPage';
-import ECards2 from '../components/ECARDS2';
-import ADminProdPage from '../components/ADminProdPage';
+
 import ALLuser from '../components/ALLuser';
 import Graph from '../components/Graphs';
-import AdminGraphPage from '../components/AdminGraphPage';
+
+import AdminNavbar from '../components/AdminNavbar';
+import Chart from '../ChartJs/Chart';
 
 const Allroutes = () => {
   const state = useSelector((state) => state.auth);
@@ -56,11 +56,35 @@ const Allroutes = () => {
         {state.admin ? (
           <>
             <Route path="/admin" element={<ADminPage />}></Route>
-            <Route path="/admin/add" element={<JoinOurTeam />} />
-            <Route path="/admin/sales" element={<Text>Sales</Text>} />
-            <Route path="/admin/graphs" element={<AdminGraphPage />} />
-            <Route path="/admin/products" element={<ADminProdPage />} />
-            <Route path="/admin/users" element={<ALLuser />} />
+            <Route
+              path="/admin/add"
+              element={
+                <>
+                  <AdminNavbar />
+                  <JoinOurTeam />
+                </>
+              }
+            />
+            <Route path="/admin/sales" element={<AdminNavbar />} />
+            <Route
+              path="/admin/graphs"
+              element={
+                <>
+                  <AdminNavbar />
+                  <Chart />
+                </>
+              }
+            />
+
+            <Route
+              path="/admin/users"
+              element={
+                <>
+                  <AdminNavbar />
+                  <ALLuser />
+                </>
+              }
+            />
           </>
         ) : null}
         <Route path="*" element={<NotFound />}></Route>

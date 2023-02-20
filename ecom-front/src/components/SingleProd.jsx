@@ -20,7 +20,7 @@ import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { MdLocalShipping } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSingle } from '../redux/products/prod.actions';
+import { getAllProducts, getSingle } from '../redux/products/prod.actions';
 import { addToCart, getCart } from '../redux/cart/cart.actions';
 import { AddToWishList, getWishList } from '../redux/wishList/wish.actions';
 
@@ -37,7 +37,9 @@ const SingleProd = () => {
   console.log(id);
   console.log(state.single);
   useEffect(() => {
-    dispatch(getSingle(id));
+    dispatch(getSingle(id)).then((res) => {
+      dispatch(getAllProducts());
+    });
   }, [id]);
   const handleAddTOcart = (id) => {
     dispatch(addToCart(id))

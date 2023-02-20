@@ -34,7 +34,6 @@ const LinkItems = [
   { name: 'Add DATA', icon: FiHome, href: '/admin/add' },
   { name: 'Graph', icon: BsGraphUp, href: '/admin/graphs' },
   { name: 'Sales', icon: FcSalesPerformance, href: '/admin/sales' },
-  { name: 'Products', icon: GoPackage, href: '/admin/products' },
   { name: 'Users', icon: ImUsers, href: '/admin/users' },
 ];
 

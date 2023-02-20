@@ -15,11 +15,14 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getCart } from '../redux/cart/cart.actions';
 import { getWishList } from '../redux/wishList/wish.actions';
+import { getAllProducts } from '../redux/products/prod.actions';
 const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCart())
-      .then((res) => dispatch(getWishList()))
+      .then((res) =>
+        dispatch(getWishList()).then((res) => dispatch(getAllProducts()))
+      )
       .catch((er) => console.log(er.message));
   }, []);
   return (

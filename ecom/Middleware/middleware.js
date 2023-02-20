@@ -38,6 +38,7 @@ const cartMiddleware = async (req, res, next) => {
 
   try {
     const verify = jwt.verify(token, 'ECOM');
+    console.log(verify, 'verify jwt');
     if (verify) {
       const check = await userModel.findOne({ _id: verify.id });
       if (check) {

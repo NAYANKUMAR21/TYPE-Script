@@ -42,18 +42,23 @@ export const Wishlist = () => {
   const {
     wishlist: { data, InWish },
   } = useSelector((store) => store.WishListItems);
+
   const handleDelete = (id) => {
     console.log(id);
     dispatch(deleteProduct(id))
-      .then(() => dispatch(getWishList()))
+      .then((res) => dispatch(getWishList()))
       .catch((er) => console.log(er.message));
   };
   //MoveToCart
   const handleMoveCart = (id) => {
     console.log(id, 'this deo handle');
-    dispatch(MoveToCart(id)).then((res) => {
-      dispatch(getWishList());
-    });
+    dispatch(MoveToCart(id))
+      .then((res) => {
+        dispatch(getWishList())
+          .then((res) => dispatch(getCart()))
+          .catch((er) => console.log(er.message));
+      })
+      .catch((er) => console.log(er.message));
   };
   useEffect(() => {
     dispatch(getCart())
