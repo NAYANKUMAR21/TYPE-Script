@@ -50,6 +50,7 @@ const Navbar = () => {
   const handleLogout = () => {
     console.log('this logout');
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     dispatch({ type: LOGGOUT_USER });
     dispatch({ type: LOGOUT_UESER_WISHLIST });
     dispatch({ type: LOGOUT_UESER_CART });

@@ -38,6 +38,7 @@ export const LoginAct = (cred) => async (dispatch, state) => {
 
     if (user.data.user == 'Admin') {
       console.log('this');
+      localStorage.setItem('role', 'Admin');
       return dispatch({ type: AUTH_ADMIN_LOGGED_IN, payload: user.data.token });
     }
 

@@ -11,7 +11,7 @@ import {
 const initialState = {
   allUsers: [],
   single: {},
-  admin: false,
+  admin: !!localStorage.getItem('role'),
   isSigned: false,
   data: {
     token: localStorage.getItem('token') || null,
@@ -69,7 +69,7 @@ export const AuthReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isSigned: true,
-        admin: !!localStorage.getItem('token'),
+        admin: !!localStorage.getItem('role'),
         data: {
           token: localStorage.getItem('token'),
           isAuth: localStorage.getItem('token') ? true : false,

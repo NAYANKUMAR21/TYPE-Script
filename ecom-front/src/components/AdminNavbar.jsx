@@ -22,7 +22,7 @@ const Links = [
   { Tag: '/admin', to: 'Dashboard' },
   { Tag: '/admin/sales', to: 'Sales' },
   { Tag: '/admin/add', to: 'Add Page' },
-  { Tag: '/admin/graphs', to: 'Graph' },
+  { Tag: '/admin/graphs', to: 'Analytics' },
   { Tag: '/admin/users', to: 'Users' },
 ];
 

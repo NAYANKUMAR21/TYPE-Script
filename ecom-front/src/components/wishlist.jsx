@@ -21,6 +21,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Text,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -68,77 +69,88 @@ export const Wishlist = () => {
   return (
     <>
       {InWish > 0 ? (
-        <TableContainer>
-          <Table variant="striped" m={'auto'} mt={100} w={'70%'} boxShadow="md">
-            <TableCaption>Items of Paticular User Incart</TableCaption>
-            <Thead>
-              <Tr>
-                <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
-                  Product
-                </Th>
-                <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
-                  Price
-                </Th>
+        <>
+          <TableContainer>
+            <Table
+              variant="striped"
+              m={'auto'}
+              mt={100}
+              w={'70%'}
+              boxShadow="md"
+            >
+              <TableCaption>Items of Paticular User Incart</TableCaption>
+              <Thead>
+                <Tr>
+                  <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
+                    Product
+                  </Th>
+                  <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
+                    Price
+                  </Th>
 
-                <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
-                  Gender
-                </Th>
-                <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
-                  Customs
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {data?.map((item, index) => {
-                return (
-                  <Tr key={index}>
-                    <Td w="15%">
-                      <Box>
-                        <Image
-                          src={
-                            item.product.category === 'Male'
-                              ? MALE_IMG
-                              : item.product.category == 'Female'
-                              ? FEMALE_IMG
-                              : OTHERS
-                          }
-                        />
-                      </Box>
-                    </Td>
-                    <Td>${item.product.price}</Td>
-                    {/* <Td textAlign={'left'}>{item.quantity}</Td> */}
-                    <Td textAlign={'left'}>{item.product.category}</Td>
-                    <Td>
-                      <Box display="flex" gap="10px">
-                        <Button
-                          bg="red.400"
-                          color={'white'}
-                          onClick={() => {
-                            handleMoveCart(item._id);
-                          }}
-                        >
-                          <BsCartCheck />
-                        </Button>
-                        <Link to={`/cart/${item.product._id}`}>
-                          <Button bg="blue.400" color={'white'}>
-                            <BsBoxArrowUpRight />
+                  <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
+                    Gender
+                  </Th>
+                  <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
+                    Customs
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {data?.map((item, index) => {
+                  return (
+                    <Tr key={index}>
+                      <Td w="15%">
+                        <Box>
+                          <Image
+                            src={
+                              item.product.category === 'Male'
+                                ? MALE_IMG
+                                : item.product.category == 'Female'
+                                ? FEMALE_IMG
+                                : OTHERS
+                            }
+                          />
+                        </Box>
+                      </Td>
+                      <Td>${item.product.price}</Td>
+                      {/* <Td textAlign={'left'}>{item.quantity}</Td> */}
+                      <Td textAlign={'left'}>{item.product.category}</Td>
+                      <Td>
+                        <Box display="flex" gap="10px">
+                          <Button
+                            bg="red.400"
+                            color={'white'}
+                            onClick={() => {
+                              handleMoveCart(item._id);
+                            }}
+                          >
+                            <BsCartCheck />
                           </Button>
-                        </Link>
-                        <Button
-                          bg="red.400"
-                          color={'white'}
-                          onClick={() => handleDelete(item._id)}
-                        >
-                          <BsFillTrashFill />
-                        </Button>
-                      </Box>
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </TableContainer>
+                          <Link to={`/cart/${item.product._id}`}>
+                            <Button bg="blue.400" color={'white'}>
+                              <BsBoxArrowUpRight />
+                            </Button>
+                          </Link>
+                          <Button
+                            bg="red.400"
+                            color={'white'}
+                            onClick={() => handleDelete(item._id)}
+                          >
+                            <BsFillTrashFill />
+                          </Button>
+                        </Box>
+                      </Td>
+                    </Tr>
+                  );
+                })}
+              </Tbody>
+            </Table>
+          </TableContainer>
+          <Text fontSize={'2xl'}>
+            Total - {data?.reduce((sum, item) => sum + item.product.price, 0)}
+          </Text>
+        </>
       ) : (
         <Box pt={'60px'} zIndex="0">
           <Alert status="error">

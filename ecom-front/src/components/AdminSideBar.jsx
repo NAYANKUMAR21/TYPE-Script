@@ -32,7 +32,7 @@ import { NavLink } from 'react-router-dom';
 import { ImUsers } from 'react-icons/im';
 const LinkItems = [
   { name: 'Add DATA', icon: FiHome, href: '/admin/add' },
-  { name: 'Graph', icon: BsGraphUp, href: '/admin/graphs' },
+  { name: 'Analytics', icon: BsGraphUp, href: '/admin/graphs' },
   { name: 'Sales', icon: FcSalesPerformance, href: '/admin/sales' },
   { name: 'Users', icon: ImUsers, href: '/admin/users' },
 ];
