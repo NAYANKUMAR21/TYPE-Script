@@ -20,7 +20,6 @@ app.post('/getWishlist', cartMiddleware, async (req, res) => {
   }
 });
 
-
 app.post('/', cartMiddleware, async (req, res) => {
   const { productId } = req.body;
 

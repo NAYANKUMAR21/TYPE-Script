@@ -36,7 +36,7 @@ const Cart = () => {
   const state = useSelector((store) => store.CartItems);
   const dispatch = useDispatch();
   console.log(state);
-  
+
   const handleDelete = (id) => {
     console.log(id);
     dispatch(DeleteProd(id))
@@ -128,13 +128,17 @@ const Cart = () => {
               </Tbody>
             </Table>
           </TableContainer>
-          <Text fontSize={'2xl'}>
-            Total -
-            {state?.cart?.data?.reduce(
-              (sum, item) => sum + item.product.price,
-              0
-            )}
-          </Text>
+          <Box>
+            <Text fontSize={'2xl'}>
+              Total -
+              {state?.cart?.data?.reduce(
+                (sum, item) => sum + item.product.price,
+                0
+              )}
+            </Text>
+            <Button>BUY NOW</Button>
+            {/* button to finishing buy */}
+          </Box>
         </>
       ) : (
         <Box pt={'60px'} zIndex="0">
