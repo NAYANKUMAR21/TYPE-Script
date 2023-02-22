@@ -28,6 +28,7 @@ const middlewarePost = async (req, res, next) => {
   }
 };
 const cartMiddleware = async (req, res, next) => {
+  console.log(req.body,"this");
   const { token } = req.body;
   console.log(token, 'back fron above');
   if (!token) {

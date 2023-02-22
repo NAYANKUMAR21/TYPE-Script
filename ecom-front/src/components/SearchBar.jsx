@@ -32,6 +32,7 @@ const SearchBar = () => {
           <AutoCompleteGroup title="Fruits" showDivider>
             {store?.data?.AllData?.map((item, index) => (
               <NavLink
+                key={index}
                 to={`/product/${item.category == 'Male' ? 'Male' : 'Female'}/${
                   item._id
                 }`}

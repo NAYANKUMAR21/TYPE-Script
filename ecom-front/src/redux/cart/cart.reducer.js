@@ -4,6 +4,7 @@ import {
   CART_PRODUCT_ERROR,
   CART_PRODUCT_LOADING,
   LOGOUT_UESER_CART,
+  USER_PRODUCTS_BOUGHT,
 } from './cart.type';
 
 const initialState = {
@@ -12,11 +13,21 @@ const initialState = {
     InCart: 0,
   },
   bought: [],
+  InBought: 0,
   loading: false,
   error: false,
 };
 export const CartReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case USER_PRODUCTS_BOUGHT: {
+      return {
+        ...state,
+        bought: payload,
+        InBought: payload.length,
+        loading: false,
+        error: false,
+      };
+    }
     case CART_ADD_PRODUCT: {
       return {
         ...state,
@@ -56,6 +67,7 @@ export const CartReducer = (state = initialState, { type, payload }) => {
           InCart: 0,
         },
         bought: [],
+        InBought: 0,
         loading: false,
         error: false,
       };

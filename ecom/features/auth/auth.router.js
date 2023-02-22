@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const argon2 = require('argon2');
 const userModel = require('./auth.model');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+
 const app = Router();
 app.post('/login', async (req, res) => {
   const { email, password, name, age } = req.body;

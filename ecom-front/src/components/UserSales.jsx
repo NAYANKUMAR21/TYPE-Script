@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
-
-import {
-  BsBoxArrowUpRight,
-  BsFillTrashFill,
-  BsCartCheck,
-} from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { getOrders } from '../redux/cart/cart.actions';
+import { BsBoxArrowUpRight, BsFillTrashFill } from 'react-icons/bs';
 import {
   Table,
   Thead,
   Tbody,
+  Tfoot,
   Tr,
   Th,
   Td,
@@ -23,16 +21,8 @@ import {
   AlertDescription,
   Text,
 } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  deleteProduct,
-  getWishList,
-  MoveToCart,
-} from '../redux/wishList/wish.actions';
-import { getCart } from '../redux/cart/cart.actions';
-
-export const Wishlist = () => {
+const UserSales = () => {
   let MALE_IMG =
     'https://manofmany.com/wp-content/uploads/2019/04/David-Gandy.jpg';
   let FEMALE_IMG =
@@ -40,43 +30,30 @@ export const Wishlist = () => {
   let OTHERS =
     'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=320&q=80';
   const dispatch = useDispatch();
-  const {
-    wishlist: { data, InWish },
-  } = useSelector((store) => store.WishListItems);
-
-  const handleDelete = (id) => {
-    console.log(id);
-    dispatch(deleteProduct(id))
-      .then((res) => dispatch(getWishList()))
-      .catch((er) => console.log(er.message));
-  };
-  //MoveToCart
-  const handleMoveCart = (id) => {
-    console.log(id, 'this deo handle');
-    dispatch(MoveToCart(id))
-      .then((res) => {
-        dispatch(getWishList())
-          .then((res) => dispatch(getCart()))
-          .catch((er) => console.log(er.message));
-      })
-      .catch((er) => console.log(er.message));
-  };
+  const state = useSelector((store) => store.CartItems);
   useEffect(() => {
-    dispatch(getCart())
-      .then((res) => dispatch(getWishList()))
-      .catch((er) => console.log(er.message));
+    dispatch(getOrders());
   }, []);
+  console.log(state.InBought, 'from heres');
   return (
-    <>
-      {InWish > 0 ? (
-        <>
+    <Box>
+      {state?.InBought > 0 ? (
+        <Box w="90%" m="auto" mt="100px">
+          <Text
+            fontSize={'3xl'}
+            fontWeight={700}
+            color="blue.400"
+            letterSpacing={'5px'}
+          >
+            Products Bought
+          </Text>
           <TableContainer>
             <Table
               variant="striped"
               m={'auto'}
-              mt={100}
               w={'70%'}
               boxShadow="md"
+              mt={50}
             >
               <TableCaption>Items of Paticular User Incart</TableCaption>
               <Thead>
@@ -87,9 +64,21 @@ export const Wishlist = () => {
                   <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
                     Price
                   </Th>
-
-                  <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
+                  <Th
+                    color={'blue.400'}
+                    fontWeight={'900'}
+                    fontSize="17px"
+                    textAlign={'center'}
+                  >
                     Gender
+                  </Th>
+                  <Th
+                    color={'blue.400'}
+                    fontWeight={'900'}
+                    fontSize="17px"
+                    textAlign={'center'}
+                  >
+                    Quantity
                   </Th>
                   <Th color={'blue.400'} fontWeight={'900'} fontSize="17px">
                     Customs
@@ -97,7 +86,7 @@ export const Wishlist = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                {data?.map((item, index) => {
+                {state?.bought?.map((item, index) => {
                   return (
                     <Tr key={index}>
                       <Td w="15%">
@@ -115,31 +104,15 @@ export const Wishlist = () => {
                         </Box>
                       </Td>
                       <Td>${item.product.price}</Td>
-                      {/* <Td textAlign={'left'}>{item.quantity}</Td> */}
-                      <Td textAlign={'left'}>{item.product.category}</Td>
+                      <Td textAlign={'center'}>{item.product.category}</Td>
+                      <Td textAlign={'center'}>{item.quantity}</Td>
                       <Td>
-                        <Box display="flex" gap="10px">
-                          <Button
-                            bg="red.400"
-                            color={'white'}
-                            onClick={() => {
-                              handleMoveCart(item._id);
-                            }}
-                          >
-                            <BsCartCheck />
-                          </Button>
+                        <Box display="flex" p="0px" gap="10px">
                           <Link to={`/cart/${item.product._id}`}>
                             <Button bg="blue.400" color={'white'}>
                               <BsBoxArrowUpRight />
                             </Button>
                           </Link>
-                          <Button
-                            bg="red.400"
-                            color={'white'}
-                            onClick={() => handleDelete(item._id)}
-                          >
-                            <BsFillTrashFill />
-                          </Button>
                         </Box>
                       </Td>
                     </Tr>
@@ -148,31 +121,30 @@ export const Wishlist = () => {
               </Tbody>
             </Table>
           </TableContainer>
-          <Text fontSize={'2xl'}>
-            Total - {data?.reduce((sum, item) => sum + item.product.price, 0)}
-          </Text>
-        </>
+        </Box>
       ) : (
-        <Box pt={'60px'} zIndex="0">
+        <Box pt={'65px'} zIndex="0">
           <Alert status="error">
             <AlertIcon />
-            <AlertTitle>Your WishList is Empty !</AlertTitle>
+            <AlertTitle>Log in to see Bought page!</AlertTitle>
             <AlertDescription>
-              Visit Home Page to Shop{' '}
-              <Link to="/">
+              Visit Login Page to Shop{' '}
+              <Link to="/login">
                 <Button
                   bg="transperent"
                   color="blue.400"
                   textDecoration={'underline'}
                   __hover={{ bg: 'transperent' }}
                 >
-                  Home
+                  Login
                 </Button>
               </Link>
             </AlertDescription>
           </Alert>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
+
+export default UserSales;

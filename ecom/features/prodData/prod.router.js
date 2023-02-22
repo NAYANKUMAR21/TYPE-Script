@@ -6,7 +6,7 @@ const { middlewarePost } = require('../../Middleware/middleware');
 app.get('/', async (req, res) => {
   try {
     console.log('this geall');
-    let getAll = await productModel.find();
+    let getAll = await productModel.find().sort({ price: -1 });
     return res
       .status(200)
       .send({ message: 'Succefully feteched', data: getAll });
@@ -23,7 +23,7 @@ app.get('/:id', async (req, res) => {
     // console.log('this get genders');
     console.log(id, 'backedn');
 
-    let getAll = await productModel.find({ category: id });
+    let getAll = await productModel.find({ category: id }).sort({ price: -1 });
 
     return res
       .status(200)

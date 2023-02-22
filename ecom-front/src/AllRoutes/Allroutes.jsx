@@ -20,6 +20,9 @@ import Graph from '../components/Graphs';
 
 import AdminNavbar from '../components/AdminNavbar';
 import Chart from '../ChartJs/Chart';
+import UserSales from '../components/UserSales';
+import ActualChart from '../ChartJs/ActualChart';
+import AdminSoldProducts from '../components/AdminSoldProducts';
 
 const Allroutes = () => {
   const state = useSelector((state) => state.auth);
@@ -53,6 +56,7 @@ const Allroutes = () => {
         <Route path="/cart/:id" element={<SingleProd />}></Route>
         <Route path="/wishlist" element={<Wishlist />}></Route>
         <Route path="/profile" element={<Text>Profile</Text>}></Route>
+        <Route path="/sales" element={<UserSales />}></Route>
         {state.admin ? (
           <>
             <Route path="/admin" element={<ADminPage />}></Route>
@@ -71,7 +75,7 @@ const Allroutes = () => {
               element={
                 <>
                   <AdminNavbar />
-                  <Chart />
+                  <ActualChart />
                 </>
               }
             />
@@ -85,6 +89,7 @@ const Allroutes = () => {
                 </>
               }
             />
+            <Route path="/admin/Ordered" element={<AdminSoldProducts />} />
           </>
         ) : null}
         <Route path="*" element={<NotFound />}></Route>

@@ -24,6 +24,7 @@ const Links = [
   { Tag: '/admin/add', to: 'Add Page' },
   { Tag: '/admin/graphs', to: 'Analytics' },
   { Tag: '/admin/users', to: 'Users' },
+  { Tag: '/admin/Ordered', to: 'Ordered' },
 ];
 
 export default function AdminNavbar() {

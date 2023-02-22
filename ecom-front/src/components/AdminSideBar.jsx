@@ -30,11 +30,13 @@ import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ImUsers } from 'react-icons/im';
+
 const LinkItems = [
   { name: 'Add DATA', icon: FiHome, href: '/admin/add' },
   { name: 'Analytics', icon: BsGraphUp, href: '/admin/graphs' },
   { name: 'Sales', icon: FcSalesPerformance, href: '/admin/sales' },
   { name: 'Users', icon: ImUsers, href: '/admin/users' },
+  { name: 'Orders', icon: GoPackage, href: '/admin/Ordered' },
 ];
 
 export default function SimpleSidebar({ children }) {

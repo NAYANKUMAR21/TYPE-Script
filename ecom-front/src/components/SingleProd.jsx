@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { GoPackage } from 'react-icons/go';
 import {
   Box,
   Container,
@@ -15,16 +16,23 @@ import {
   List,
   ListItem,
 } from '@chakra-ui/react';
-import { BsFillHeartFill } from 'react-icons/bs';
+import { BsCartCheck, BsFillHeartFill } from 'react-icons/bs';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { MdLocalShipping } from 'react-icons/md';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts, getSingle } from '../redux/products/prod.actions';
-import { addToCart, getCart } from '../redux/cart/cart.actions';
+import {
+  addToCart,
+  getCart,
+  Handlepay,
+  handlepay,
+  HandleSinglePay,
+} from '../redux/cart/cart.actions';
 import { AddToWishList, getWishList } from '../redux/wishList/wish.actions';
 
 const SingleProd = () => {
+  const nav = useNavigate();
   let MALE_IMG =
     'https://manofmany.com/wp-content/uploads/2019/04/David-Gandy.jpg';
   let FEMALE_IMG =
@@ -51,6 +59,14 @@ const SingleProd = () => {
   const MoveToWishListv = (id) => {
     dispatch(AddToWishList(id))
       .then((res) => dispatch(getWishList()))
+      .catch((er) => console.log(er.message));
+  };
+  const handleBuyNow = () => {
+    //state.single
+    console.log([state.single]);
+    let data = [state.single];
+    dispatch(HandleSinglePay(data))
+      .then((res) => alert('Ordered Placed Successfully'))
       .catch((er) => console.log(er.message));
   };
   return (
@@ -221,6 +237,32 @@ const SingleProd = () => {
             onClick={() => handleAddTOcart(id)}
           >
             Add to cart
+            <span style={{ marginLeft: '5px' }}>
+              <BsCartCheck />
+            </span>
+          </Button>
+          <Button
+            rounded={'none'}
+            w={'full'}
+            mt={8}
+            size={'lg'}
+            py={'7'}
+            bg={useColorModeValue('blue.400', 'gray.50')}
+            color={useColorModeValue('white', 'gray.900')}
+            textTransform={'uppercase'}
+            _hover={{
+              transform: 'translateY(2px)',
+              boxShadow: 'lg',
+              bg: useColorModeValue('red.400', 'gray.50'),
+            }}
+            onClick={() => {
+              handleBuyNow(id);
+            }}
+          >
+            Buy Now{' '}
+            <span style={{ marginLeft: '5px' }}>
+              <GoPackage />
+            </span>
           </Button>
           <Button
             rounded={'none'}

@@ -1,16 +1,21 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Data } from './Data';
 import PieChart from './PieChart';
 
 const Chart = () => {
+  const {
+    data: { AllData },
+  } = useSelector((store) => store.products);
+
   const [chartData, setChartData] = useState({
-    labels: Data.map((data) => data.year),
+    labels: AllData.map((data) => data.category),
     datasets: [
       {
         label: 'Users Gained ',
-        data: Data.map((data) => data.userGain),
+        data: AllData.map((data) => data.price),
         backgroundColor: [
           'rgba(75,192,192,1)',
           '#ecf0f1',

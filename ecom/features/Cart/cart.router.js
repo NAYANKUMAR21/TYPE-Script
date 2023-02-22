@@ -60,4 +60,14 @@ app.delete('/:id', async (req, res) => {
     return res.status(500).send({ message: 'Something wrong happened' });
   }
 });
+app.get('/admin-getall/', async (req, res) => {
+  try {
+    const getCart = await cartModel.find().populate('product');
+
+    return res.status(200).send(getCart);
+  } catch (er) {
+    return res.status(500).send({ message: er.message });
+  }
+});
+
 module.exports = app;

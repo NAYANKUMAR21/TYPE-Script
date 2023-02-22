@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { AiTwotoneLock, AiFillEdit } from 'react-icons/ai';
 import { BsBoxArrowUpRight, BsFillTrashFill } from 'react-icons/bs';
 import {
@@ -21,12 +22,13 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DeleteProd, getCart } from '../redux/cart/cart.actions';
+import { DeleteProd, getCart, Handlepay } from '../redux/cart/cart.actions';
 import { Link } from 'react-router-dom';
 import { AddToWishList, getWishList } from '../redux/wishList/wish.actions';
 
 const Cart = () => {
-  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+
   let MALE_IMG =
     'https://manofmany.com/wp-content/uploads/2019/04/David-Gandy.jpg';
   let FEMALE_IMG =
@@ -46,6 +48,8 @@ const Cart = () => {
         });
       })
       .catch((er) => console.log(er.message));
+
+    // setTotal(x);
   };
   useEffect(() => {
     dispatch(getCart())
@@ -54,6 +58,71 @@ const Cart = () => {
       })
       .catch((er) => console.log(er.message));
   }, []);
+
+  const handlePay = () => {
+    let total = state?.cart?.data?.reduce(
+      (sum, item) => sum + item.product.price,
+      0
+    );
+    console.log('this form handle pay', total);
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onerror = () => {
+      alert('RazorPay SDK failed to load');
+    };
+    script.onload = async () => {
+      try {
+        const result = await axios.post(
+          'http://localhost:8080/payment/create-order',
+          {
+            amount: 20 + '00',
+          }
+        );
+
+        const { amount, id: orderId, currency } = result.data.order;
+        console.log(result.data, 'from handle pay ');
+
+        const getkey = await axios.get(
+          'http://localhost:8080/payment/get-razorpay-key'
+        );
+        const key = getkey.data;
+        console.log(key.key, 'second console inside handlepay');
+        const options = {
+          key: key.key,
+          amount: amount.toString(),
+          currency: currency,
+          name: 'ECOM An Online Store',
+          description: 'FIRST RAZOR PAY',
+          order_id: orderId,
+          handler: async function (response) {
+            const result = await axios.post(
+              'http://localhost:8080/payment/pay-order',
+              {
+                amount: amount,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpay0rderId: response.razorpay_order_id,
+                razorpaysighature: response.razorpay_signature,
+                token: localStorage.getItem('token'),
+              }
+            );
+            dispatch(getCart());
+            // fetchOrder();
+          },
+          prefill: {
+            name: 'ECOM ecommorce store',
+            email: 'nayanph1@gmail.com',
+            contact: '9481574558',
+          },
+        };
+
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+      } catch (er) {
+        alert(er);
+      }
+    };
+    document.body.appendChild(script);
+  };
   return (
     <>
       {state.cart.InCart > 0 ? (
@@ -93,6 +162,7 @@ const Cart = () => {
                       <Td w="15%">
                         <Box>
                           <Image
+                            borderRadius={'5px'}
                             src={
                               item.product.category === 'Male'
                                 ? MALE_IMG
@@ -136,12 +206,13 @@ const Cart = () => {
                 0
               )}
             </Text>
-            <Button>BUY NOW</Button>
+            <Button onClick={handlePay}>BUY NOW</Button>
             {/* button to finishing buy */}
+            {loading && <Text fontSize={'xl'}>...Loading please wait</Text>}
           </Box>
         </>
       ) : (
-        <Box pt={'60px'} zIndex="0">
+        <Box pt={'70px'} zIndex="0">
           <Alert status="error">
             <AlertIcon />
             <AlertTitle>Your Cart is Empty!</AlertTitle>

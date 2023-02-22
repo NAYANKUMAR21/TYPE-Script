@@ -201,8 +201,8 @@ const DesktopNav = () => {
           <Popover trigger={'hover'} placement={'bottom-start'}>
             <PopoverTrigger>
               <NavLink
-                p={2}
                 to={navItem.href ?? '#'}
+                p={2}
                 color={linkColor}
                 bg="blue.400"
                 _hover={{
@@ -213,10 +213,10 @@ const DesktopNav = () => {
                 <Text
                   fontSize={'lg'}
                   fontWeight={500}
-                  color={linkColor}
+                  color={index % 2 == 0 ? 'red.400' : 'blue.400'}
                   _hover={{
                     textDecoration: 'none',
-                    color: linkHoverColor,
+                    color: index % 2 !== 0 ? 'red.400' : 'blue.400',
                   }}
                 >
                   {navItem.label}
@@ -300,7 +300,7 @@ const MobileNav = () => {
   );
 };
 
-const MobileNavItem = ({ label, children, href }) => {
+const MobileNavItem = ({ label, children, href, index }) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -313,10 +313,7 @@ const MobileNavItem = ({ label, children, href }) => {
           textDecoration: 'none',
         }}
       >
-        <Text
-          fontWeight={600}
-          color={useColorModeValue('gray.600', 'gray.200')}
-        >
+        <Text fontWeight={600} color={index % 2 !== 0 ? 'red.400' : 'blue.400'}>
           <NavLink to={`/${href}`}>{label}</NavLink>
         </Text>
         {children && (
