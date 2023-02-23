@@ -91,7 +91,7 @@ app.post('/logout', async (req, res) => {
   try {
     // await client.connect();
     await client.set('token', '');
-    // await client.disconnect();
+    await client.disconnect();
     return res.status(200).send('LoggedOut');
   } catch (er) {
     return res
