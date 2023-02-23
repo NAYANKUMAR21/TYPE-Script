@@ -26,7 +26,7 @@ app.post('/login', async (req, res) => {
       );
       await client.connect();
       await client.set('token', token);
-      await client.disconnect();
+      
       return res
         .status(200)
         .send({ token, message: 'LOGGED IN SUCCESSFULLTY', user: exists.role });

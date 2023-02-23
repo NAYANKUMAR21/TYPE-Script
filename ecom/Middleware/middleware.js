@@ -7,7 +7,7 @@ const middlewarePost = async (req, res, next) => {
   try {
     await client.connect();
     let token = await client.get('token');
-    await client.disconnect();
+    // await client.disconnect();
     if (!token) {
       return res
         .status(500)
@@ -35,7 +35,7 @@ const cartMiddleware = async (req, res, next) => {
   console.log(req.body, 'this');
   await client.connect();
   let token = await client.get('token');
-  await client.disconnect();
+  // await client.disconnect();
   console.log(token, 'back fron above');
   if (!token) {
     return res

@@ -53,7 +53,7 @@ app.get('/single/:single', async (req, res) => {
     await client.connect();
     const getSingle = await productModel.findOne({ _id: single });
     await client.set(`${single}`, JSON.stringify(getSingle));
-    await client.disconnect();
+    // await client.disconnect();
     console.log(getSingle);
     return res.status(200).send(getSingle);
   } catch (er) {
