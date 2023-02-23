@@ -42,20 +42,16 @@ app.get('/:id', async (req, res) => {
 app.get('/single/:single', async (req, res) => {
   const { single } = req.params;
   try {
-    await client.connect();
     let x = await client.get(`${single}`);
     x = JSON.parse(x);
-    console.log(x, 'this');
-    await client.disconnect();
+
     if (x) {
       return res.status(200).send(x);
     }
-    console.log(single, 'from this single');
-    await client.connect();
+
     const getSingle = await productModel.findOne({ _id: single });
     await client.set(`${single}`, JSON.stringify(getSingle));
-    await client.disconnect();
-    console.log(getSingle);
+
     return res.status(200).send(getSingle);
   } catch (er) {
     return res.status(500).send(er.message);

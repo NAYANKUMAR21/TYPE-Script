@@ -3,10 +3,7 @@ const argon2 = require('argon2');
 const userModel = require('./auth.model');
 const jwt = require('jsonwebtoken');
 //redis
-const { createClient } = require('redis');
-const client = createClient();
-client.on('error', (err) => console.log('Redis Client Error', err));
-
+const client = require('../../config/dbconfig');
 const app = Router();
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -25,11 +22,7 @@ app.post('/login', async (req, res) => {
         }
       );
       await client.connect();
-      console.log(1, 'cl');
       await client.set('token', token);
-      console.log(2, 'cl');
-      await client.disconnect();
-      console.log(3, 'cl');
       return res
         .status(200)
         .send({ token, message: 'LOGGED IN SUCCESSFULLTY', user: exists.role });
@@ -96,12 +89,8 @@ app.get('/allusers', async (req, res) => {
 });
 app.get('/logout', async (req, res) => {
   try {
-    await client.connect();
-    console.log(1, 'cl');
     await client.del('token');
-    console.log(2, 'cl');
     await client.disconnect();
-    console.log(3, 'cl');
     return res.status(200).send('LoggedOut');
   } catch (er) {
     return res.status(500).send({ message: er.message });
