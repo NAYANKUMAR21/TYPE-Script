@@ -7,12 +7,12 @@ import axios from 'axios';
 export const GETALL = () => async (dispatch, state) => {
   try {
     dispatch({ type: GETALL_CART_LOADING });
-    const users = await axios.get('http://localhost:8080/user/allusers');
-    const products = await axios.get('http://localhost:8080/product/');
+    const users = await axios.get('https://ecom-def1.onrender.com/user/allusers');
+    const products = await axios.get('https://ecom-def1.onrender.com/product/');
     const cartItems = await axios.get(
-      'http://localhost:8080/cart/admin-getall'
+      'https://ecom-def1.onrender.com/cart/admin-getall'
     );
-    const sold = await axios.get('http://localhost:8080/payment/list-order');
+    const sold = await axios.get('https://ecom-def1.onrender.com/payment/list-order');
     console.log(users.data, 'from admin');
     dispatch({
       type: GET_ALL_CART,

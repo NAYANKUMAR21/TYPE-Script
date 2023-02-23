@@ -12,7 +12,7 @@ export const getCart = () => async (dispatch, state) => {
   try {
     let x = localStorage.getItem('token');
     console.log(x);
-    const getDataCart = await axios.post('http://localhost:8080/cart/getAll', {
+    const getDataCart = await axios.post('https://ecom-def1.onrender.com/cart/getAll', {
       token: x,
     });
     console.log(getDataCart);
@@ -32,7 +32,7 @@ export const addToCart = (id) => async (dispatch, state) => {
   };
   try {
     dispatch({ type: CART_PRODUCT_LOADING });
-    await axios.post('http://localhost:8080/cart/', obj);
+    await axios.post('https://ecom-def1.onrender.com/cart/', obj);
     dispatch({ type: CART_ADD_PRODUCT });
   } catch (er) {
     dispatch({ type: CART_PRODUCT_ERROR });
@@ -42,7 +42,7 @@ export const addToCart = (id) => async (dispatch, state) => {
 export const DeleteProd = (item) => async (dispatch, state) => {
   try {
     dispatch({ type: CART_PRODUCT_LOADING });
-    await axios.delete(`http://localhost:8080/cart/${item._id}`, {
+    await axios.delete(`https://ecom-def1.onrender.com/cart/${item._id}`, {
       productId: item.product._id,
     });
     dispatch({ type: CART_ADD_PRODUCT });
@@ -89,7 +89,7 @@ export const HandleSinglePay = (data) => {
   script.onload = async () => {
     try {
       const result = await axios.post(
-        'http://localhost:8080/payment/create-order',
+        'https://ecom-def1.onrender.com/payment/create-order',
         {
           amount: 20 + '00',
         }
@@ -99,7 +99,7 @@ export const HandleSinglePay = (data) => {
       console.log(result.data, 'from handle pay ');
 
       const getkey = await axios.get(
-        'http://localhost:8080/payment/get-razorpay-key'
+        'https://ecom-def1.onrender.com/payment/get-razorpay-key'
       );
       const key = getkey.data;
       console.log(key.key, 'second console inside handlepay');
@@ -112,7 +112,7 @@ export const HandleSinglePay = (data) => {
         order_id: orderId,
         handler: async function (response) {
           const result = await axios.post(
-            'http://localhost:8080/payment/pay-order/single',
+            'https://ecom-def1.onrender.com/payment/pay-order/single',
             {
               amount: amount,
               razorpayPaymentId: response.razorpay_payment_id,

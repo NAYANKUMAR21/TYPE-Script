@@ -23,7 +23,10 @@ export const signIn = (cred) => async (dispatch, state) => {
 
   try {
     dispatch({ type: AUTH_LOADING });
-    const res = await axios.post('http://localhost:8080/user/signup', cred);
+    const res = await axios.post(
+      'https://ecom-def1.onrender.com/user/signup',
+      cred
+    );
 
     dispatch({ type: AUTH_SIGNED_SUCCESS });
   } catch (er) {
@@ -52,7 +55,7 @@ export const LoginAct = (cred) => async (dispatch, state) => {
 
     return dispatch({ type: AUTH_LOGGED_IN_SUCCESS, payload: user.data.token });
   } catch (er) {
-    alert('wrong Credtetails');
+    alert(`wrong Credtetails ${er.message}`);
     window.location.reload();
     dispatch({ type: AUTH_ERROR });
     console.log(er.message);
@@ -62,7 +65,9 @@ export const LoginAct = (cred) => async (dispatch, state) => {
 export const getAllUsers = () => async (dispatch, state) => {
   try {
     dispatch({ type: AUTH_LOADING });
-    const getuser = await axios.get('http://localhost:8080/user/allusers');
+    const getuser = await axios.get(
+      'https://ecom-def1.onrender.com/user/allusers'
+    );
 
     return dispatch({ type: GET_ALL_USERS, payload: getuser.data.users });
   } catch (er) {
@@ -74,7 +79,7 @@ export const getAllUsers = () => async (dispatch, state) => {
 export const UserLogout = () => async (dispatch, state) => {
   try {
     dispatch({ type: LOGGOUT_USER_LOADING });
-    const logout = await axios.get('http://localhost:8080/user/logout');
+    const logout = await axios.post('http://localhost:8080/user/logout');
     if (logout.data === 'LoggedOut') {
       console.log('this logout');
       localStorage.removeItem('token');

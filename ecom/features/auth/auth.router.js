@@ -87,11 +87,11 @@ app.get('/allusers', async (req, res) => {
     return res.status(400).send(er.message);
   }
 });
-app.get('/logout', async (req, res) => {
+app.post('/logout', async (req, res) => {
   try {
-    await client.connect();
-    await client.del('token');
-
+    // await client.connect();
+    await client.set('token', '');
+    // await client.disconnect();
     return res.status(200).send('LoggedOut');
   } catch (er) {
     return res

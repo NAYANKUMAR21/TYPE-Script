@@ -10,7 +10,7 @@ export const getWishList = () => async (dispatch, state) => {
   try {
     dispatch({ type: WISHLIST_PRODUCT_LOADING });
     const getWish = await axios.post(
-      `http://localhost:8080/wishlist/getWishlist`,
+      `https://ecom-def1.onrender.com/wishlist/getWishlist`,
       { token: localStorage.getItem('token') }
     );
     dispatch({ type: WISHLIST_GET_PRODUCT, payload: getWish.data.data });
@@ -23,7 +23,7 @@ export const getWishList = () => async (dispatch, state) => {
 export const AddToWishList = (id) => async (dispatch, state) => {
   try {
     dispatch({ type: WISHLIST_PRODUCT_LOADING });
-    const x = await axios.post(`http://localhost:8080/wishlist`, {
+    const x = await axios.post(`https://ecom-def1.onrender.com/wishlist`, {
       token: localStorage.getItem('token'),
       productId: id,
     });
@@ -37,7 +37,7 @@ export const AddToWishList = (id) => async (dispatch, state) => {
 export const deleteProduct = (id) => async (dispatch, state) => {
   try {
     dispatch({ type: WISHLIST_PRODUCT_LOADING });
-    const x = await axios.delete(`http://localhost:8080/wishlist/${id}`);
+    const x = await axios.delete(`https://ecom-def1.onrender.com/wishlist/${id}`);
     dispatch({ type: WISHLIST_ADD_PRODUCT });
   } catch (er) {
     dispatch({ type: WISHLIST_PRODUCT_ERROR });
@@ -52,7 +52,7 @@ export const MoveToCart = (id) => async (dispatch, state) => {
     let body = {
       token: localStorage.getItem('token'),
     };
-    await axios.post(`http://localhost:8080/wishlist/toCart/${id}`, {
+    await axios.post(`https://ecom-def1.onrender.com/wishlist/toCart/${id}`, {
       token: localStorage.getItem('token'),
     });
     // let res = await fetch(, {

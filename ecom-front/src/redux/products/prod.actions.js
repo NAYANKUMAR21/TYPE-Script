@@ -11,7 +11,7 @@ import {
 export const getGenders = (id) => async (dispatch, state) => {
   try {
     dispatch({ type: GET_PROD_LOADING });
-    const getData = await axios.get('http://localhost:8080/product/' + id);
+    const getData = await axios.get('https://ecom-def1.onrender.com/product/' + id);
 
     console.log(getData.data.data, 'from herer');
     if (id === 'Male') {
@@ -33,7 +33,7 @@ export const getGenders = (id) => async (dispatch, state) => {
 export const getAllProducts = () => async (dispatch, state) => {
   try {
     dispatch({ type: GET_PROD_LOADING });
-    const getData = await axios.get('http://localhost:8080/product/');
+    const getData = await axios.get('https://ecom-def1.onrender.com/product/');
     console.log(getData.data.data);
     return dispatch({
       type: GET_ALL_DATA_SUCCESS,
@@ -49,7 +49,7 @@ export const getSingle = (id) => async (dispatch, state) => {
   try {
     dispatch({ type: GET_PROD_LOADING });
     const getSingleProd = await axios.get(
-      `http://localhost:8080/product/single/${id}`
+      `https://ecom-def1.onrender.com/product/single/${id}`
     );
     console.log(getAllProducts, 'single product');
     return dispatch({ type: GET_SINLE_PRODUCT, payload: getSingleProd.data });
@@ -63,7 +63,7 @@ export const deleteProd = (id) => async (dispatch, state) => {
     console.log(id, 'from actions');
     dispatch({ type: GET_PROD_LOADING });
     const deleteProd = await axios.delete(
-      `http://localhost:8080/product/${id}`,
+      `https://ecom-def1.onrender.com/product/${id}`,
       { token: localStorage.getItem('token') }
     );
     return dispatch({ type: GET_SINLE_PRODUCT, payload: {} });
@@ -79,7 +79,7 @@ export const PostData = (data) => async (dispatch, state) => {
       token: localStorage.getItem('token'),
     };
     dispatch({ type: GET_PROD_LOADING });
-    const postdata = await axios.post('http://localhost:8080/product/', body);
+    const postdata = await axios.post('https://ecom-def1.onrender.com/product/', body);
     return dispatch({ type: GET_SINLE_PRODUCT, payload: {} });
   } catch (er) {
     dispatch({ type: GET_PROD_ERROR });

@@ -70,6 +70,8 @@ const SingleProd = () => {
       .then((res) => alert('Ordered Placed Successfully'))
       .catch((er) => console.log(er.message));
   };
+
+  
   return (
     <Container maxW={'7xl'}>
       <SimpleGrid

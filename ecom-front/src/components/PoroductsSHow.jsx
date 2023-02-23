@@ -2,6 +2,7 @@ import { Box, Grid } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
+import Loading from '../Loaders/Loading';
 import { getAllProducts, getGenders } from '../redux/products/prod.actions';
 import ECards from './ECards';
 import Crouserl from './MensCrousels';
@@ -26,7 +27,9 @@ const PoroductsSHow = () => {
         ? dispatch(getGenders('Female'))
         : dispatch(getAllProducts());
   }, [id]);
-
+  if (state.loading) {
+    return <Loading />;
+  }
   return (
     <Box>
       <Crouserl />
