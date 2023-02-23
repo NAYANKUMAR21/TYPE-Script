@@ -9,7 +9,7 @@ client.on('error', (err) => console.log('Redis Client Error', err));
 
 const app = Router();
 app.post('/login', async (req, res) => {
-  const { email, password, name, age } = req.body;
+  const { email, password } = req.body;
   if (!email || !password) {
     return res.status(500).send({ message: 'Cred Missing' });
   }
@@ -77,7 +77,7 @@ app.post('/signup', async (req, res) => {
     }
     return res.status(400).send({ message: 'Account Already exists' });
   } catch (er) {
-    return res.status(500).send({ message: er.message });
+    return res.status(500).send({ message: `${er.message} from here` });
   }
 });
 
