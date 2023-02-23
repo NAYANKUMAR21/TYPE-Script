@@ -4,6 +4,7 @@ const client = require('../config/dbconfig');
 
 const middlewarePost = async (req, res, next) => {
   try {
+    await client.connect();
     let token = await client.get('token');
 
     console.log(3, 'cl');
@@ -31,6 +32,7 @@ const middlewarePost = async (req, res, next) => {
   }
 };
 const cartMiddleware = async (req, res, next) => {
+  await client.connect();
   let token = await client.get('token');
 
   if (!token) {

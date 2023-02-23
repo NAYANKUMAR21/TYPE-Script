@@ -4,9 +4,8 @@ const productModel = require('./prod.model');
 const app = Router();
 const { middlewarePost } = require('../../Middleware/middleware');
 //redis
-const { createClient } = require('redis');
-const client = createClient();
-client.on('error', (err) => console.log('Redis Client Error', err));
+const client = require('../../config/dbconfig');
+const { disconnect } = require('mongoose');
 
 app.get('/', async (req, res) => {
   try {
@@ -42,16 +41,17 @@ app.get('/:id', async (req, res) => {
 app.get('/single/:single', async (req, res) => {
   const { single } = req.params;
   try {
+    await client.connect();
     let x = await client.get(`${single}`);
     x = JSON.parse(x);
-
+    await client.disconnect();
     if (x) {
       return res.status(200).send(x);
     }
 
     const getSingle = await productModel.findOne({ _id: single });
     await client.set(`${single}`, JSON.stringify(getSingle));
-
+    await client.disconnect();
     return res.status(200).send(getSingle);
   } catch (er) {
     return res.status(500).send(er.message);

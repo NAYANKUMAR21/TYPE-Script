@@ -31,7 +31,7 @@ app.post('/login', async (req, res) => {
       .status(400)
       .send({ message: 'Wrong Cred Account doesnt exists' });
   } catch (er) {
-    return res.status(500).send({ message: er.message });
+    return res.status(500).send({ message: `${er.message} from login router` });
   }
 });
 
@@ -89,11 +89,14 @@ app.get('/allusers', async (req, res) => {
 });
 app.get('/logout', async (req, res) => {
   try {
+    await client.connect();
     await client.del('token');
-    await client.disconnect();
+
     return res.status(200).send('LoggedOut');
   } catch (er) {
-    return res.status(500).send({ message: er.message });
+    return res
+      .status(500)
+      .send({ message: `${er.message}=> from logout rout backend` });
   }
 });
 module.exports = app;
