@@ -1,3 +1,4 @@
+import { Parallax } from 'react-parallax';
 import React, { useEffect } from 'react';
 import { GoPackage } from 'react-icons/go';
 import {

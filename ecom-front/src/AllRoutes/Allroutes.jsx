@@ -23,6 +23,7 @@ import Chart from '../ChartJs/Chart';
 import UserSales from '../components/UserSales';
 import ActualChart from '../ChartJs/ActualChart';
 import AdminSoldProducts from '../components/AdminSoldProducts';
+import PrivateRoute from './PrivateRoute';
 
 const Allroutes = () => {
   const state = useSelector((state) => state.auth);
@@ -49,14 +50,71 @@ const Allroutes = () => {
             </>
           }
         />
-        <Route path="/product/Male/:id" element={<SingleProd />}></Route>
-        <Route path="/product/Female/:id" element={<SingleProd />}></Route>
-        <Route path="/product/all/:id" element={<SingleProd />}></Route>
-        <Route path="/cart" element={<Cart />}></Route>
-        <Route path="/cart/:id" element={<SingleProd />}></Route>
-        <Route path="/wishlist" element={<Wishlist />}></Route>
-        <Route path="/profile" element={<Text>Profile</Text>}></Route>
-        <Route path="/sales" element={<UserSales />}></Route>
+        <Route
+          path="/product/Male/:id"
+          element={
+            <PrivateRoute>
+              <SingleProd />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/product/Female/:id"
+          element={
+            <PrivateRoute>
+              <SingleProd />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/product/all/:id"
+          element={
+            <PrivateRoute>
+              <SingleProd />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/cart"
+          element={
+            <PrivateRoute>
+              {' '}
+              <Cart />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/cart/:id"
+          element={
+            <PrivateRoute>
+              <SingleProd />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/wishlist"
+          element={
+            <PrivateRoute>
+              <Wishlist />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Text>Profile</Text>
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/sales"
+          element={
+            <PrivateRoute>
+              <UserSales />
+            </PrivateRoute>
+          }
+        ></Route>
         {state.admin ? (
           <>
             <Route path="/admin" element={<ADminPage />}></Route>

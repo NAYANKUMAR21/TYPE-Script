@@ -1,14 +1,18 @@
 const userModel = require('../features/auth/auth.model');
 const jwt = require('jsonwebtoken');
+const { createClient } = require('redis');
+const client = createClient();
+client.on('error', (err) => console.log('Redis Client Error', err));
 const middlewarePost = async (req, res, next) => {
-  const { token } = req.body;
-  if (!token) {
-    return res
-      .status(500)
-      .send({ message: 'Something happened Wrong from here' });
-  }
-
   try {
+    await client.connect();
+    let token = await client.get('token');
+    await client.disconnect();
+    if (!token) {
+      return res
+        .status(500)
+        .send({ message: 'Something happened Wrong from here' });
+    }
     const verify = jwt.verify(token, 'ECOM');
     if (verify) {
       console.log(verify, 'v');
@@ -28,8 +32,10 @@ const middlewarePost = async (req, res, next) => {
   }
 };
 const cartMiddleware = async (req, res, next) => {
-  console.log(req.body,"this");
-  const { token } = req.body;
+  console.log(req.body, 'this');
+  await client.connect();
+  let token = await client.get('token');
+  await client.disconnect();
   console.log(token, 'back fron above');
   if (!token) {
     return res

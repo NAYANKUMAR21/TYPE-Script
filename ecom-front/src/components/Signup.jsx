@@ -13,10 +13,12 @@ import {
 
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { LoginAct } from '../redux/auth/auth.actions';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const nav = useNavigate();
   const state = useSelector((state) => state.auth);
   console.log(state);
   const [cred, setCred] = useState({
@@ -30,7 +32,9 @@ const Login = () => {
   };
   const handleSubmit = () => {
     console.log(cred);
-    dispatch(LoginAct(cred));
+    dispatch(LoginAct(cred))
+      .then((res) => nav('/'))
+      .catch((er) => console.log(er.message));
   };
   return (
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>

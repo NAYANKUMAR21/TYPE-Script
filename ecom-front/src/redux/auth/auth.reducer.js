@@ -6,6 +6,9 @@ import {
   AUTH_ADMIN_LOGGED_IN,
   LOGGOUT_USER,
   GET_ALL_USERS,
+  LOGGOUT_USER_ERROR,
+  LOGGOUT_USER_SUCCESS,
+  LOGGOUT_USER_LOADING,
 } from './auth.type';
 
 const initialState = {
@@ -78,7 +81,7 @@ export const AuthReducer = (state = initialState, { type, payload }) => {
         error: false,
       };
     }
-    case LOGGOUT_USER: {
+    case LOGGOUT_USER_SUCCESS: {
       return {
         allUsers: [],
         single: {},
@@ -90,6 +93,20 @@ export const AuthReducer = (state = initialState, { type, payload }) => {
         },
         loading: false,
         error: false,
+      };
+    }
+    case LOGGOUT_USER_LOADING: {
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      };
+    }
+    case LOGGOUT_USER_ERROR: {
+      return {
+        ...state,
+        error: true,
+        loading: false,
       };
     }
     default: {

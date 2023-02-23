@@ -39,6 +39,7 @@ import { getWishList } from '../redux/wishList/wish.actions';
 import { LOGOUT_UESER_WISHLIST } from '../redux/wishList/wish.types';
 import { LOGOUT_UESER_CART } from '../redux/cart/cart.type';
 import SearchBar from '../components/SearchBar';
+import { UserLogout } from '../redux/auth/auth.actions';
 
 const Navbar = () => {
   const [Search, setSearch] = useState('');
@@ -48,12 +49,7 @@ const Navbar = () => {
   console.log(state);
 
   const handleLogout = () => {
-    console.log('this logout');
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    dispatch({ type: LOGGOUT_USER });
-    dispatch({ type: LOGOUT_UESER_WISHLIST });
-    dispatch({ type: LOGOUT_UESER_CART });
+    dispatch(UserLogout());
   };
   const handleSearch = (e) => {
     setSearch(e.target.value);

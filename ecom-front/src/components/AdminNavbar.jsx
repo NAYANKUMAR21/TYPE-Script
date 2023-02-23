@@ -54,7 +54,7 @@ export default function AdminNavbar() {
                 <Box
                   fontWeight={600}
                   key={index}
-                  color={index % 2 == 0 ? 'red.400' : 'blue.400'}
+                  color={index % 2 == 0 ? 'blue.400' : 'red.400'}
                 >
                   <NavLink to={link.Tag}>{link.to}</NavLink>
                 </Box>

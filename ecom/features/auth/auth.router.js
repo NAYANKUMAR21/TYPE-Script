@@ -1,8 +1,11 @@
 const { Router } = require('express');
-const mongoose = require('mongoose');
 const argon2 = require('argon2');
 const userModel = require('./auth.model');
 const jwt = require('jsonwebtoken');
+//redis
+const { createClient } = require('redis');
+const client = createClient();
+client.on('error', (err) => console.log('Redis Client Error', err));
 
 const app = Router();
 app.post('/login', async (req, res) => {
@@ -21,7 +24,9 @@ app.post('/login', async (req, res) => {
           expiresIn: '1 day',
         }
       );
-
+      await client.connect();
+      await client.set('token', token);
+      await client.disconnect();
       return res
         .status(200)
         .send({ token, message: 'LOGGED IN SUCCESSFULLTY', user: exists.role });
@@ -84,6 +89,16 @@ app.get('/allusers', async (req, res) => {
       .send({ message: 'Successfully fetched', users: getusers });
   } catch (er) {
     return res.status(400).send(er.message);
+  }
+});
+app.get('/logout', async (req, res) => {
+  try {
+    await client.connect();
+    await client.del('token');
+    await client.disconnect();
+    return res.status(200).send('LoggedOut');
+  } catch (er) {
+    return res.status(500).send({ message: er.message });
   }
 });
 module.exports = app;
