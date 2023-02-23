@@ -25,8 +25,11 @@ app.post('/login', async (req, res) => {
         }
       );
       await client.connect();
+      console.log(1, 'cl');
       await client.set('token', token);
-      
+      console.log(2, 'cl');
+      await client.disconnect();
+      console.log(3, 'cl');
       return res
         .status(200)
         .send({ token, message: 'LOGGED IN SUCCESSFULLTY', user: exists.role });
@@ -94,8 +97,11 @@ app.get('/allusers', async (req, res) => {
 app.get('/logout', async (req, res) => {
   try {
     await client.connect();
+    console.log(1, 'cl');
     await client.del('token');
+    console.log(2, 'cl');
     await client.disconnect();
+    console.log(3, 'cl');
     return res.status(200).send('LoggedOut');
   } catch (er) {
     return res.status(500).send({ message: er.message });

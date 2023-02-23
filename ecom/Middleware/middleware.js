@@ -3,11 +3,15 @@ const jwt = require('jsonwebtoken');
 const { createClient } = require('redis');
 const client = createClient();
 client.on('error', (err) => console.log('Redis Client Error', err));
+
 const middlewarePost = async (req, res, next) => {
   try {
+    console.log(1, 'cl');
     await client.connect();
+    console.log(2, 'cl');
     let token = await client.get('token');
-    // await client.disconnect();
+    await client.disconnect();
+    console.log(3, 'cl');
     if (!token) {
       return res
         .status(500)
@@ -33,9 +37,13 @@ const middlewarePost = async (req, res, next) => {
 };
 const cartMiddleware = async (req, res, next) => {
   console.log(req.body, 'this');
+  console.log(1, 'cl');
   await client.connect();
+  console.log(2, 'cl');
   let token = await client.get('token');
-  // await client.disconnect();
+  console.log(3, 'cl');
+  await client.disconnect();
+  console.log(4, 'cl');
   console.log(token, 'back fron above');
   if (!token) {
     return res
