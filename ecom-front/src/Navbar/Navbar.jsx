@@ -49,6 +49,7 @@ const Navbar = () => {
   console.log(state);
 
   const handleLogout = () => {
+    console.log('x');
     dispatch(UserLogout());
   };
   const handleSearch = (e) => {

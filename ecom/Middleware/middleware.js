@@ -1,13 +1,11 @@
 const userModel = require('../features/auth/auth.model');
 const jwt = require('jsonwebtoken');
-const client = require('../config/dbconfig');
+
 
 const middlewarePost = async (req, res, next) => {
   try {
-    await client.connect();
-    let token = await client.get('token');
+    const { token } = req.body;
 
-    console.log(3, 'cl');
     if (!token) {
       return res
         .status(500)
@@ -32,8 +30,7 @@ const middlewarePost = async (req, res, next) => {
   }
 };
 const cartMiddleware = async (req, res, next) => {
-  await client.connect();
-  let token = await client.get('token');
+  const { token } = req.body;
 
   if (!token) {
     return res

@@ -7,12 +7,12 @@ import {
   CART_PRODUCT_LOADING,
   USER_PRODUCTS_BOUGHT,
 } from './cart.type';
-
+let url = 'http://localhost:8080';
 export const getCart = () => async (dispatch, state) => {
   try {
     let x = localStorage.getItem('token');
     console.log(x);
-    const getDataCart = await axios.post('https://ecom-def1.onrender.com/cart/getAll', {
+    const getDataCart = await axios.post(url + '/cart/getAll', {
       token: x,
     });
     console.log(getDataCart);
@@ -32,7 +32,7 @@ export const addToCart = (id) => async (dispatch, state) => {
   };
   try {
     dispatch({ type: CART_PRODUCT_LOADING });
-    await axios.post('https://ecom-def1.onrender.com/cart/', obj);
+    await axios.post(url + '/cart/', obj);
     dispatch({ type: CART_ADD_PRODUCT });
   } catch (er) {
     dispatch({ type: CART_PRODUCT_ERROR });
@@ -42,7 +42,7 @@ export const addToCart = (id) => async (dispatch, state) => {
 export const DeleteProd = (item) => async (dispatch, state) => {
   try {
     dispatch({ type: CART_PRODUCT_LOADING });
-    await axios.delete(`https://ecom-def1.onrender.com/cart/${item._id}`, {
+    await axios.delete(url + `/cart/${item._id}`, {
       productId: item.product._id,
     });
     dispatch({ type: CART_ADD_PRODUCT });
@@ -88,19 +88,14 @@ export const HandleSinglePay = (data) => {
   };
   script.onload = async () => {
     try {
-      const result = await axios.post(
-        'https://ecom-def1.onrender.com/payment/create-order',
-        {
-          amount: 20 + '00',
-        }
-      );
+      const result = await axios.post(url + '/payment/create-order', {
+        amount: 20 + '00',
+      });
 
       const { amount, id: orderId, currency } = result.data.order;
       console.log(result.data, 'from handle pay ');
 
-      const getkey = await axios.get(
-        'https://ecom-def1.onrender.com/payment/get-razorpay-key'
-      );
+      const getkey = await axios.get(url + '/payment/get-razorpay-key');
       const key = getkey.data;
       console.log(key.key, 'second console inside handlepay');
       const options = {
@@ -111,17 +106,14 @@ export const HandleSinglePay = (data) => {
         description: 'FIRST RAZOR PAY',
         order_id: orderId,
         handler: async function (response) {
-          const result = await axios.post(
-            'https://ecom-def1.onrender.com/payment/pay-order/single',
-            {
-              amount: amount,
-              razorpayPaymentId: response.razorpay_payment_id,
-              razorpay0rderId: response.razorpay_order_id,
-              razorpaysighature: response.razorpay_signature,
-              token: localStorage.getItem('token'),
-              single: data,
-            }
-          );
+          const result = await axios.post(url + '/payment/pay-order/single', {
+            amount: amount,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpay0rderId: response.razorpay_order_id,
+            razorpaysighature: response.razorpay_signature,
+            token: localStorage.getItem('token'),
+            single: data,
+          });
 
           alert('Ordered Successfully Placed');
         },

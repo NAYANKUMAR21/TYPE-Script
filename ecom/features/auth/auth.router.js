@@ -2,8 +2,7 @@ const { Router } = require('express');
 const argon2 = require('argon2');
 const userModel = require('./auth.model');
 const jwt = require('jsonwebtoken');
-//redis
-const client = require('../../config/dbconfig');
+
 const app = Router();
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -21,8 +20,7 @@ app.post('/login', async (req, res) => {
           expiresIn: '1 day',
         }
       );
-      await client.connect();
-      await client.set('token', token);
+
       return res
         .status(200)
         .send({ token, message: 'LOGGED IN SUCCESSFULLTY', user: exists.role });
@@ -89,9 +87,7 @@ app.get('/allusers', async (req, res) => {
 });
 app.post('/logout', async (req, res) => {
   try {
-    // await client.connect();
-    await client.set('token', '');
-    await client.disconnect();
+    localStorage.removeItem('token');
     return res.status(200).send('LoggedOut');
   } catch (er) {
     return res
