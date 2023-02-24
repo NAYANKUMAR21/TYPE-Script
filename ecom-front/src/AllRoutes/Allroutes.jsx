@@ -16,10 +16,9 @@ import ADminPage from '../components/ADminPage';
 import JoinOurTeam from '../components/ADDDataPage';
 
 import ALLuser from '../components/ALLuser';
-import Graph from '../components/Graphs';
 
 import AdminNavbar from '../components/AdminNavbar';
-import Chart from '../ChartJs/Chart';
+
 import UserSales from '../components/UserSales';
 import ActualChart from '../ChartJs/ActualChart';
 import AdminSoldProducts from '../components/AdminSoldProducts';
