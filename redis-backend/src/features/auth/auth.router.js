@@ -4,6 +4,7 @@ const authModel = require('./auth.model');
 const app = Router();
 const jwt = require('jsonwebtoken');
 const argon2 = require('argon2');
+const client = require('../../Redis/redisConfig');
 const privateKey = process.env.KEY || 'REDIS';
 
 app.post('/login', async (req, res) => {
@@ -26,8 +27,11 @@ app.post('/login', async (req, res) => {
           expiresIn: '7 day',
         }
       );
-
-      return res.status(200).send({ token, refreshToken });
+      await client.connect();
+      await client.set('token', token);
+      let x = await client.get('token');
+      await client.disconnect();
+      return res.status(200).send({ token, refreshToken, redis: x });
     }
     return res.status(403).send('User not registered');
   } catch (er) {
