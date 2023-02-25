@@ -5,8 +5,7 @@ const app = Router();
 const jwt = require('jsonwebtoken');
 const argon2 = require('argon2');
 const privateKey = process.env.KEY || 'REDIS';
-const redis = require('redis');
-const client = redis.createClient();
+
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -27,11 +26,8 @@ app.post('/login', async (req, res) => {
           expiresIn: '7 day',
         }
       );
-      await client.connect();
-      await client.set('token', token);
-      let x = await client.get('token');
-      await client.disconnect();
-      return res.status(200).send({ token, refreshToken, redis: x });
+
+      return res.status(200).send({ token, refreshToken });
     }
     return res.status(403).send('User not registered');
   } catch (er) {
