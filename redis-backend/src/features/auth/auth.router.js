@@ -30,7 +30,7 @@ app.post('/login', async (req, res) => {
       await client.connect();
       await client.set('token', token);
       let x = await client.get('token');
-      await client.disconnect();
+      await client.quit();
       return res.status(200).send({ token, refreshToken, redis: x });
     }
     return res.status(403).send('User not registered');
