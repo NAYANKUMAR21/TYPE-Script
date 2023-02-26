@@ -17,12 +17,20 @@ export default function todos() {
   };
   const handleFilter = (id) => {
     console.log(id, 'x');
-    let x = data?.filter((item, index) => {
+    let x = data?.map((item, index) => {
       if (index == id) {
         console.log(index);
         item.iscompleted = !item.iscompleted;
       }
       return item;
+    });
+    setData(x);
+  };
+  const handleDelete = (id) => {
+    let x = data?.filter((item, index) => {
+      if (id !== index) {
+        return item;
+      }
     });
     setData(x);
   };
@@ -46,6 +54,7 @@ export default function todos() {
               <button onClick={() => handleFilter(index)}>
                 {item.iscompleted ? 'Completed' : 'not completed'}
               </button>
+              <div onClick={() => handleDelete(index)}>🚮</div>
             </div>
           </div>
         );
