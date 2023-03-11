@@ -6,4 +6,4 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 export const store = legacy_createStore(
   AuthReducer,
   composeWithDevTools(applyMiddleware(thunk))
-);
+)
