@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const app = express();
 const client = require('./redis');
 app.get('/', async (req, res) => {
