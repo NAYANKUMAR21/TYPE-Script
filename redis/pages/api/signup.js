@@ -21,16 +21,15 @@ export default async function handler(req, res) {
       }
       await client.connect();
       const createAcount = await authModel.create({ email, password });
+
       let token = jwt.sign({ id: email, roll: createAcount._id }, 'ABC');
       await client.set(email, token);
       await client.disconnect();
-      return res
-        .status(200)
-        .send({
-          message: 'Successfully Account created ',
-          createAcount,
-          token,
-        });
+      return res.status(200).send({
+        message: 'Successfully Account created ',
+        email,
+        token,
+      });
     }
   } catch (er) {
     return res.status(404).send({ message: 'Something went wrong Signup' });
