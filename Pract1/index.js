@@ -15,5 +15,5 @@ app.get('/show', async (req, res) => {
   return res.status(200).send({ savedToken, verify });
 });
 app.listen(8080, () => {
-  console.log('http://localhost:8080');
+  console.log('server listening on http://localhost:8080');
 });
