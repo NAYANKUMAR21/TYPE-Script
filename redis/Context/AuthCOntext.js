@@ -5,7 +5,10 @@ export const AuthCOntextProvider = ({ children }) => {
   const [state, setState] = useState('');
   const signup = async (data) => {
     try {
-      let x = await axios.post('http://localhost:3000/api/signup', data);
+      let x = await axios.post(
+        'https://redischeck.vercel.app/api/signup',
+        data
+      );
       const { token } = x.data;
 
       setState(token);
