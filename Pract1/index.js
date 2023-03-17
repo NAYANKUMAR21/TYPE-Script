@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const Redis = require('ioredis');
-const redis = new Redis();
+const redis = new Redis(6380, '127.0.0.1');
 let jwt = require('jsonwebtoken');
 app.get('/', (req, res) => {
   const token = jwt.sign({ id: 'NayanKumar', roll: '1234' }, 'XYZ');
