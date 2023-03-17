@@ -1,18 +1,32 @@
 const express = require('express');
 const app = express();
-const Redis = require('ioredis');
-const redis = new Redis(6380, '127.0.0.1');
+const redis = require('redis');
+const client = redis.createClient({
+  host: '127.0.0.1',
+  port: '6379',
+  enable_offline_queue: false,
+});
+client.on('connect', () => {
+  console.log('redis connected');
+});
+client.on('error', (er) => {
+  console.log(er.message);
+});
+
 let jwt = require('jsonwebtoken');
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   const token = jwt.sign({ id: 'NayanKumar', roll: '1234' }, 'XYZ');
-  redis.set('token', token);
-  return res.send({ roll: '12345' });
+  await client.connect();
+  await client.set('nayan', token);
+  await client.disconnect();
+
+  return res.send({ roll: '12345', token });
 });
 app.get('/show', async (req, res) => {
-  const savedToken = await redis.get('token');
-  console.log(savedToken);
-  const verify = jwt.verify(savedToken, 'XYZ');
-  return res.status(200).send({ savedToken, verify });
+  await client.connect();
+  let x = await client.get('nayan');
+  await client.disconnect();
+  return res.status(200).send({ get: 'verify', x });
 });
 app.listen(8080, () => {
   console.log('server listening on http://localhost:8080');
