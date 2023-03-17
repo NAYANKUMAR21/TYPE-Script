@@ -2,8 +2,11 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const app = express();
 const client = require('./redis');
+const cors = require('cors');
+app.use(express.json());
+app.use(cors());
 app.get('/', async (req, res) => {
-  const token = jwt.sign({ _id: 'NayanKumar1', roll: '4558' }, 'NAYAN');
+  const token = jwt.sign({ _id: 'NayanKumar1', roll: '1234' }, 'NAYAN');
   await client.connect();
   await client.set('token', token);
   await client.disconnect();
