@@ -6,9 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./index.css" />
     <title>Chat App</title>
+    <style>
+      h1 {
+        color: blue;
+        text-align: center;
+      }
+      div {
+        border: 1px solid black;
+        width: 50%;
+        margin: auto;
+      }
+      input[type='text'] {
+        padding: 10px;
+      }
+      input[type='submit'] {
+        padding: 10px;
+      }
+    </style>
   </head>
   <body>
-    <div class="container"><h1>NAYAN</h1></div>
+    <h1>Chating app</h1>
+    <div>
+      <form action="">
+        <input type="text" placeholder="Message" id="message" />
+        <input type="submit" value="Submit" placeholder="S" />
+      </form>
+    </div>
+    <div id="message"></div>
   </body>
 </html>
-<script src="./socket.js"></script>
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script>
+  var socket = io();
+  const form = document.querySelector('form');
+  const message = document.querySelector('#message');
+  console.log(4);
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (message.value) {
+      socket.emit('chat', message.value);
+    }
+  });
+  const messageCOntainer = document.querySelector('#message');
+  socket.on('update', (msg) => {
+    const h1 = document.createElement('h1');
+    h1.innerText = msg;
+    messageCOntainer.append(h1);
+  });
+</script>
