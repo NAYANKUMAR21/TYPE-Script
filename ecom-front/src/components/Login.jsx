@@ -159,7 +159,7 @@ const Signup = () => {
                   bg: 'blue.500',
                 }}
               >
-                Sign up
+                {state.loading ? <Spinner color="white" /> : 'Sign up'}
               </Button>
             </Stack>
             <Stack pt={6} margin="auto">
